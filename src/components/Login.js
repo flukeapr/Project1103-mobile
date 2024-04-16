@@ -37,17 +37,18 @@ const handleLogin = async ()=>{
 
   }else{
     navigation.navigate('main');
-    // Toast.show({
-    //   type: 'error',
-    //   text1: 'Login Failed',
-    //   text2: 'Please Enter Your Email and Password'
-    // })
+    Toast.show({
+      type: 'error',
+      text1: 'Login Failed',
+      text2: 'Please Enter Your Email and Password'
+    })
   }
 
 }
   return (
     <>
      <View className="flex-1 items-center justify-center bg-white">
+      
     <Image source={Logo} alt='Logo.png'></Image>
 
     <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>

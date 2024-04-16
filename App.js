@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Toast,{ BaseToast, ErrorToast } from 'react-native-toast-message';
 import { UserAuthContextProvider } from './src/context/UserAuthenContext';
 import Main from './navigation/Main';
-
+import ProductDetail from './src/components/ProductDetail';
 
 
 const toastConfig = {
@@ -75,6 +75,7 @@ export default function App() {
       <Stack.Screen name="register" component={Register} options={{headerShown: false}} />
       <Stack.Screen name="home" component={Homepage} options={{headerShown: false}} />
       <Stack.Screen name="main" component={Main} options={{headerShown: false}} />
+      <Stack.Screen name="productDetail" component={ProductDetail} options={{headerShown: false}} />
     </Stack.Navigator>
     <Toast config={toastConfig} />
     

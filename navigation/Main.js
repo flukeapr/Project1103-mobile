@@ -13,14 +13,14 @@ export default function Main() {
     screenOptions={{
       headerShown: false,
       tabBarShowLabel: false,
-      tabBarStyle: { height: 70 }
+      tabBarStyle: { height: 100 , }
       
     }}
     
     >
       <Tab.Screen name="home" component={Homepage} options={{
         tabBarIcon:({focused}) => (
-          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:10 ,borderRadius:15}}>
+          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:13 ,borderRadius:15}}>
             <Image source={require('../assets/homeIcon.png')} style={{width:25,height:25,tintColor: focused ? '#fff' : '#CE4257'}}></Image>
             
           </View>
@@ -29,7 +29,7 @@ export default function Main() {
       />
       <Tab.Screen name="cart" component={Cart} options={{
         tabBarIcon:({focused}) => (
-          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:10 ,borderRadius:15}}>
+          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:13 ,borderRadius:15}}>
             <Image source={require('../assets/cartIcon.png')} style={{width:25,height:25,tintColor: focused ? '#fff' : '#CE4257'}}></Image>
             
           </View>
@@ -38,7 +38,7 @@ export default function Main() {
       />
       <Tab.Screen name="chat" component={Chat} options={{
         tabBarIcon:({focused}) => (
-          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:10 ,borderRadius:15}}>
+          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:13 ,borderRadius:15}}>
             <Image source={require('../assets/chatIcon.png')} style={{width:25,height:25,tintColor: focused ? '#fff' : '#CE4257'}}></Image>
             
           </View>
@@ -46,7 +46,7 @@ export default function Main() {
       }}/>
       <Tab.Screen name="profile" component={Profile} options={{
         tabBarIcon:({focused}) => (
-          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:10 ,borderRadius:15}}>
+          <View style={{alignItems:'center',justifyContent:'center', backgroundColor: focused ? '#CE4257' : 'white',padding:13 ,borderRadius:15}}>
             <Image source={require('../assets/profileIcon.png')} style={{width:25,height:25,tintColor: focused ? '#fff' : '#CE4257'}}></Image>
             
           </View>
