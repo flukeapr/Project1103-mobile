@@ -55,12 +55,12 @@ const handleLogin = async ()=>{
     <Input containerStyle={{width: "70%"}} placeholder="Password" secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
     
 
-    <Text className="text-sm font-semibold ml-36 my-2" style={{color:"#FF9B54"}}>Forget Password</Text>
+    <Text className="text-sm font-semibold ml-36 my-2" style={{color:"#CE4257"}} onPress={() => navigation.navigate('resetpass')}>Reset Password</Text>
     
     <Button
               title="LOGIN"
               buttonStyle={{
-                backgroundColor: '#ff9d8a',
+                backgroundColor: '#CE4257',
                 
                 borderWidth: 2,
                 borderColor: 'white',
@@ -76,7 +76,7 @@ const handleLogin = async ()=>{
               size='lg'
               onPress={handleLogin}
             />
-            <Text className="text-sm font-medium  my-2" >Not Register? <Text className="text-[#FF9B54]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
+            <Text className="text-sm font-medium  my-2" >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
     </View>
     
     <View className="flex-3 bg-white pt-2">

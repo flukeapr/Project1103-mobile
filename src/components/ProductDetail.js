@@ -1,6 +1,6 @@
 import { View, Text ,Image,TouchableOpacity} from 'react-native'
 import React, { useEffect ,useState} from 'react'
-import { Button } from '@rneui/base';
+import { Button, Skeleton } from '@rneui/base';
 import { db } from "../config/Firebase";
 import { doc ,getDoc} from "firebase/firestore";
 import Toast from 'react-native-toast-message';
@@ -9,6 +9,7 @@ import Toast from 'react-native-toast-message';
 export default function ProductDetail({navigation,route}) {
     const {id}=route.params
     const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(true);
 
     const addToCart = ()=>{
         Toast.show({
@@ -30,25 +31,41 @@ export default function ProductDetail({navigation,route}) {
         }
     }
     useEffect(() => {
-        getProductDetail();
+        getProductDetail().then(() => setLoading(false));
         
     })
   return (
     <View className='flex-1 justify-between bg-white'>
-        <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,borderBottomLeftRadius:20,borderBottomRightRadius:20}}>
+        <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
             <TouchableOpacity onPress={() => navigation.navigate("main")}>
             <Image source={require('../../assets/prev.png')}></Image>
             </TouchableOpacity>
-       
-        
         </View>
-        <View className='flex-1 bg-white items-center pt-10'>
+        
+       
+        {loading ? (
+          <View className='flex-1 bg-white items-center pt-10' >
+          <Skeleton 
+           width={300}
+           height={450}
+           style={{borderColor:'#CE4257',borderWidth:1,borderRadius:10}}>
+            
+           </Skeleton>
+           <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
+           <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
+           <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
+          </View>
+        ) : (
+          <View className='flex-1 bg-white items-center pt-10'>
         <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }></Image>
         <Text className='text-lg text-[#CE4257] font-semibold my-2'>{product.name}</Text>
         <Text>สำนักพิมพ์ {product.publisher}</Text>
         <Text>ราคา {product.price} บาท</Text>
 
         </View>
+        )}
+        
+        
         
       <View className=' flex-row justify-between'>
       <Button   buttonStyle={{
@@ -58,7 +75,7 @@ export default function ProductDetail({navigation,route}) {
 
               }}
               title={`${product.price}.00 บาท`}
-              titleStyle={{ color: '#720026',fontWeight:'100' }}></Button>
+              titleStyle={{ color: '#CE4257',fontWeight:'100' }}></Button>
     
       <Button onPress={addToCart} buttonStyle={{
                 backgroundColor: '#720026',

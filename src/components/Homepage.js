@@ -1,17 +1,23 @@
 import { View, Text,ActivityIndicator ,FlatList,Image,TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
-import { Button } from "@rneui/base";
+import { Button,Icon,Overlay } from "@rneui/base";
 import { useUserAuth } from "../context/UserAuthenContext";
 import Tobtabs from "./Tobtabs";
 import { db } from "../config/Firebase";
 import { doc, getDocs, collection ,query, where } from "firebase/firestore";
-import { getDownloadURL, listAll, ref } from "firebase/storage";
-import { storage } from "../config/Firebase";
+
+
+
 export default function Homepage({ navigation }) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
   const { logOut } = useUserAuth();
+  const [visible, setVisible] = useState(false);
+  const [results, setResults] = useState('');
+  const [isRecording , setIsRecording] = useState(false);
+  const [error, setError] = useState('');
+  
   
   const getBooks = async () => {
     try {
@@ -32,10 +38,13 @@ export default function Homepage({ navigation }) {
   useEffect(() => {
     getBooks().then(() => setLoading(false));
   }, []);
-
+  const toggleOverlay = () => {
+    setVisible(!visible);
+    
+  };
 
   
-  const renderItem = ({ item, index }) => {
+  const renderItem = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate("productDetail", { id: item.id })}>
         <View style={{ flexDirection: "row", padding: 10 }} >
@@ -56,7 +65,7 @@ export default function Homepage({ navigation }) {
   };
   return (
     <>
-      <Tobtabs onSearch={setSearchText}/>
+      <Tobtabs onSearch={setSearchText} Visible={setVisible} toggleOverlay={toggleOverlay}/>
       <View className="flex-1 items-center justify-center bg-white">
       {loading ? (
         <ActivityIndicator size="large" color="#CE4257" />
@@ -74,7 +83,14 @@ export default function Homepage({ navigation }) {
           keyExtractor={(item) => item.id}
         />
       )}
-       
+       {/* <Overlay isVisible={visible} onBackdropPress={toggleOverlay} overlayStyle={{width:300,height:300,backgroundColor:'white',borderRadius:10}} >
+        <View className='flex justify-center items-center h-full'>
+          <Icon name={isRecording ? "mic-off" : "mic"} color="black" size={50} onPress={()=>(isRecording? stopRecording :startRecording  )}/>
+          <Text>{results}</Text>
+        </View>
+      </Overlay> */}
+
+
       </View>
     </>
   );

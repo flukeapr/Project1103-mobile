@@ -10,6 +10,8 @@ import Toast,{ BaseToast, ErrorToast } from 'react-native-toast-message';
 import { UserAuthContextProvider } from './src/context/UserAuthenContext';
 import Main from './navigation/Main';
 import ProductDetail from './src/components/ProductDetail';
+import EditProfile from './src/components/EditProfile';
+import ResetPass from './src/components/ResetPass';
 
 
 const toastConfig = {
@@ -23,7 +25,7 @@ const toastConfig = {
       style={{ borderLeftColor: 'green',
       borderLeftWidth:7,
       width:'90%',
-      height:100,
+      height:80,
       borderRightColor:'green',
       borderRightWidth:7
     }}
@@ -47,7 +49,7 @@ const toastConfig = {
      style={{ borderLeftColor: 'red',
       borderLeftWidth:7,
       width:'90%',
-      height:100,
+      height:80,
       borderRightColor:'red',
       borderRightWidth:7
     }}
@@ -76,6 +78,8 @@ export default function App() {
       <Stack.Screen name="home" component={Homepage} options={{headerShown: false}} />
       <Stack.Screen name="main" component={Main} options={{headerShown: false}} />
       <Stack.Screen name="productDetail" component={ProductDetail} options={{headerShown: false}} />
+      <Stack.Screen name="editprofile" component={EditProfile} options={{headerShown: false}} />
+      <Stack.Screen name="resetpass" component={ResetPass} options={{headerShown: false}} />
     </Stack.Navigator>
     <Toast config={toastConfig} />
     
