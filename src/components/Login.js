@@ -60,7 +60,7 @@ const handleLogin = async ()=>{
     <Button
               title="LOGIN"
               buttonStyle={{
-                backgroundColor: '#CE4257',
+                backgroundColor: '#ff9d8a',
                 
                 borderWidth: 2,
                 borderColor: 'white',
