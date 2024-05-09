@@ -4,9 +4,9 @@ import { Button, Icon } from '@rneui/base';
 import { useUserAuth } from '../context/UserAuthenContext';
 
 export default function Profile({ navigation }) {
-  const {user} = useUserAuth();
+  const {user,logOut} = useUserAuth();
   const handleLogout = async () => {
-    // await logOut();
+     await logOut();
     navigation.navigate("login");
   };
   return (
