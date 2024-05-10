@@ -2,22 +2,54 @@ import { View, Text ,Image,TouchableOpacity, ScrollView,FlatList} from 'react-na
 import React, { useEffect ,useState} from 'react'
 import { Button, Skeleton } from '@rneui/base';
 import { db } from "../config/Firebase";
-import { collection, doc ,getDoc, getDocs} from "firebase/firestore";
+import { collection, doc ,getDoc, getDocs,where,query,updateDoc,addDoc,increment} from "firebase/firestore";
 import Toast from 'react-native-toast-message';
+import { useUserAuth } from '../context/UserAuthenContext';
 
 
 export default function ProductDetail({navigation,route}) {
     const {id}=route.params
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
+    const {user} = useUserAuth();
 
-    const addToCart = ()=>{
+    const addToCart = async ()=>{
+      try {
+        const cartRef = collection(db, 'Users', user.uid, 'Cart');
+        const q = query(cartRef, where('book_id', '==', id));
+        const querySnapshot = await getDocs(q);
+    
+        if (!querySnapshot.empty) {
+          // หากมีสินค้าอยู่ในตะกร้าอยู่แล้ว
+          const docSnap = querySnapshot.docs[0];
+          await updateDoc(doc(docSnap.ref.parent.parent, 'Cart', docSnap.id), {
+            quantity: increment(1),
+            total: increment(product.price) // เพิ่มปริมาณขึ้นทีละ 1
+          });
+        } else {
+          
+          // หากไม่มีสินค้าในตะกร้า
+          await addDoc(cartRef, {
+            book_id: id,
+            name: product.name,
+            image: product.image,
+            price: product.price,
+            quantity: 1,
+            date: new Date(),
+            total: product.price
+          });
+        }
+       
         Toast.show({
-            type: 'success',
-            text1: 'เพิ่มสินค้าสำเร็จ',
-            text2: 'กรุณาตรวจสอบสินค้าในตะกร้า',
-           visibilityTime:2000,
-          })
+          type: 'success',
+          text1: 'เพิ่มสินค้าสำเร็จ',
+          text2: 'กรุณาตรวจสอบสินค้าในตะกร้า',
+         visibilityTime:2000,
+        })
+      } catch (error) {
+        console.error('Error adding to cart: ', error);
+      }
+       
     }
     
     const getProductDetail = async () => {
@@ -29,7 +61,7 @@ export default function ProductDetail({navigation,route}) {
           const reviewSnapshot = await getDocs(reviewsDoc);
           const reviewData = reviewSnapshot.docs.map((doc) => {return{id: doc.id, ...doc.data()}});
           productData.Review = reviewData;
-          
+         
           setProduct(productData);
         } catch (error) {
           console.error("Error getting documents: ", error);

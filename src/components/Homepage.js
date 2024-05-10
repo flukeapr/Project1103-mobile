@@ -36,14 +36,7 @@ export default function Homepage({ navigation }) {
       console.error("Error getting documents: ", error);
     }
   };
-  const getReview = async ()=>{
-    try {
-      const bookQuery = collection(db, "Book",);
-
-    } catch (error) {
-      
-    }
-  }
+  
 
   useEffect(() => {
     getBooks().then(() => setLoading(false));

@@ -1,10 +1,27 @@
 import { View, Text ,TouchableOpacity,Image} from 'react-native'
-import React from 'react';
+import {useState,useEffect} from 'react';
 import { Button, Icon } from '@rneui/base';
 import { useUserAuth } from '../context/UserAuthenContext';
+import { doc,getDoc } from 'firebase/firestore';
+import { db } from '../config/Firebase';
 
 export default function Profile({ navigation }) {
   const {user,logOut} = useUserAuth();
+
+  const [name, setName] = useState("");
+const [image, setImage] = useState("");
+const [loading , setLoading] = useState(true)
+  const getUser = async()=>{
+    const userRef = doc(db,"Users", user.uid);
+    const docSnap = await getDoc(userRef);
+    setName(docSnap.data().fullName);
+    setImage(docSnap.data().image)
+  }
+  useEffect(()=>{
+    getUser().then(setLoading(false))
+  })
+
+
   const handleLogout = async () => {
      await logOut();
     navigation.navigate("login");
@@ -13,8 +30,8 @@ export default function Profile({ navigation }) {
     <View className="flex-1  bg-white">
       <View className="flex-4 p-10 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
             
-            <Image source={require('../../assets/ProflieThumbnail.png')}></Image>
-      
+            <Image source={{uri: {image}}} style={{width:50,height:50, borderRadius:20}}></Image>
+            <Text style={{marginLeft:10, fontWeight:'bold',fontSize:16}}>{name}</Text>
         </View>
       <View className='flex flex-cols  w-full items-center justify-center my-10'>
         <View className='flex flex-row '>

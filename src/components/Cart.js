@@ -26,6 +26,12 @@ export default function Cart() {
         id: doc.id,
         ...doc.data()
       }));
+      let total = 0;
+      
+      cartData.forEach((doc) => {
+        total += doc.total;
+      });
+      setTotal(total);
       setProducts(cartData);
       
     } catch (error) {
@@ -35,7 +41,7 @@ export default function Cart() {
 
   useEffect(() => {
     getCart().then(() => {
-      getTotal();
+      
       setLoading(false);
       
     });
@@ -43,14 +49,7 @@ export default function Cart() {
   },[]);
 
 
-  const getTotal = () => {
-    let total = 0;
-    
-    products.forEach((product) => {
-      total += product.price * product.quantity;
-    });
-    setTotal(total);
-  }
+
 
   const increaseQuantity = async (item) => {
    
@@ -111,7 +110,7 @@ export default function Cart() {
 
   return (
     <>
-    <Tobtabs></Tobtabs>
+    <Tobtabs/>
     <View className="flex-1 justify-between items-center bg-white">
       <View>
         {loading ? (
