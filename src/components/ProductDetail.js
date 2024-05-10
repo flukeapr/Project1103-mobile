@@ -1,23 +1,55 @@
-import { View, Text ,Image,TouchableOpacity} from 'react-native'
+import { View, Text ,Image,TouchableOpacity, ScrollView,FlatList} from 'react-native'
 import React, { useEffect ,useState} from 'react'
 import { Button, Skeleton } from '@rneui/base';
 import { db } from "../config/Firebase";
-import { doc ,getDoc} from "firebase/firestore";
+import { collection, doc ,getDoc, getDocs,where,query,updateDoc,addDoc,increment} from "firebase/firestore";
 import Toast from 'react-native-toast-message';
+import { useUserAuth } from '../context/UserAuthenContext';
 
 
 export default function ProductDetail({navigation,route}) {
     const {id}=route.params
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
+    const {user} = useUserAuth();
 
-    const addToCart = ()=>{
+    const addToCart = async ()=>{
+      try {
+        const cartRef = collection(db, 'Users', user.uid, 'Cart');
+        const q = query(cartRef, where('book_id', '==', id));
+        const querySnapshot = await getDocs(q);
+    
+        if (!querySnapshot.empty) {
+          // หากมีสินค้าอยู่ในตะกร้าอยู่แล้ว
+          const docSnap = querySnapshot.docs[0];
+          await updateDoc(doc(docSnap.ref.parent.parent, 'Cart', docSnap.id), {
+            quantity: increment(1),
+            total: increment(product.price) // เพิ่มปริมาณขึ้นทีละ 1
+          });
+        } else {
+          
+          // หากไม่มีสินค้าในตะกร้า
+          await addDoc(cartRef, {
+            book_id: id,
+            name: product.name,
+            image: product.image,
+            price: product.price,
+            quantity: 1,
+            date: new Date(),
+            total: product.price
+          });
+        }
+       
         Toast.show({
-            type: 'success',
-            text1: 'เพิ่มสินค้าสำเร็จ',
-            text2: 'กรุณาตรวจสอบสินค้าในตะกร้า',
-           visibilityTime:2000,
-          })
+          type: 'success',
+          text1: 'เพิ่มสินค้าสำเร็จ',
+          text2: 'กรุณาตรวจสอบสินค้าในตะกร้า',
+         visibilityTime:2000,
+        })
+      } catch (error) {
+        console.error('Error adding to cart: ', error);
+      }
+       
     }
     
     const getProductDetail = async () => {
@@ -25,15 +57,38 @@ export default function ProductDetail({navigation,route}) {
           const productDoc = doc(db, "Book", id);
           const productSnapshot = await getDoc(productDoc);
           const productData = productSnapshot.data();
+          const reviewsDoc = collection(db, 'Book',id, 'Review')
+          const reviewSnapshot = await getDocs(reviewsDoc);
+          const reviewData = reviewSnapshot.docs.map((doc) => {return{id: doc.id, ...doc.data()}});
+          productData.Review = reviewData;
+         
           setProduct(productData);
         } catch (error) {
           console.error("Error getting documents: ", error);
         }
     }
+
     useEffect(() => {
         getProductDetail().then(() => setLoading(false));
         
     })
+    const renderItem = ({ item }) => {
+      return (
+        <View className='flex flex-row mt-4 w-full'>
+      <View className='flex flex-row w-[200] items-center'>
+        <Image source={require('../../assets/ProflieThumbnail_reivew.png')} />
+        <View className='ml-2'>
+          <Text className='text-[#565656] text-sx pt-1'>{item.User}</Text>
+          <Text className='text-[#565656]'>{item.Comment}</Text>
+        </View>
+      </View>
+      <View className='flex justify-end'>
+        <Text className='text-[#565656]'>{item.Date}</Text>
+      </View>
+    </View>
+        
+      );
+    };
   return (
     <View className='flex-1 justify-between bg-white'>
         <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
@@ -56,12 +111,39 @@ export default function ProductDetail({navigation,route}) {
            <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
           </View>
         ) : (
-          <View className='flex-1 bg-white items-center pt-10'>
-        <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }></Image>
+          <View className='flex-1 bg-white items-center pt-10 mb-4'>
+           
+         
+        <FlatList
+          ListHeaderComponent={<View>
+               <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }></Image>
         <Text className='text-lg text-[#CE4257] font-semibold my-2'>{product.name}</Text>
         <Text>สำนักพิมพ์ {product.publisher}</Text>
-        <Text>ราคา {product.price} บาท</Text>
+        <View className='flex flex-row pt-2 items-center'>
+          <Image source={require('../../assets/star.png')} ></Image>
+        <Text> {product.reviews} รีวิว</Text>
 
+        </View>
+        <Text className='pt-4'>เนื้อเรื่องโดยย่อ</Text>
+        <Text className='w-[300]'>{product.story}</Text>
+          <View className=''>
+          <Text className='text-lg text-[#CE4257] font-semibold mt-6'>รีวิวหนังสือ</Text>
+          <View className='flex flex-row pt-2 items-center'>
+          <Image source={require('../../assets/star.png')} ></Image>
+        <Text> {product.reviews} รีวิว</Text>
+          
+        </View>
+        </View>
+          </View>}
+          data={product.Review}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+        />
+           
+         
+         
+           
+       
         </View>
         )}
         

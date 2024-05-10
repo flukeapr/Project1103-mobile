@@ -15,7 +15,8 @@ export default function Login({navigation}) {
 const handleLogin = async ()=>{
   if(email && password){
     try {
-        // await Login(email,password);
+        await Login(email,password)
+       
         Toast.show({
           type: 'success',
           text1: 'Login Success',
@@ -23,7 +24,7 @@ const handleLogin = async ()=>{
         })
         setEmail('');
         setPassword('');
-        navigation.navigate('home');
+        navigation.navigate('main');
         
         
     } catch (error) {
@@ -76,6 +77,7 @@ const handleLogin = async ()=>{
               size='lg'
               onPress={handleLogin}
             />
+           
             <Text className="text-sm font-medium  my-2" >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
     </View>
     
