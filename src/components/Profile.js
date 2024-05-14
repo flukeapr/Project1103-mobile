@@ -15,7 +15,7 @@ const [loading , setLoading] = useState(true)
     const userRef = doc(db,"Users", user.uid);
     const docSnap = await getDoc(userRef);
     setName(docSnap.data().fullName);
-    setImage(docSnap.data().image)
+    setImage(docSnap.data().image|| "")
   }
   useEffect(()=>{
     getUser().then(setLoading(false))
@@ -30,7 +30,7 @@ const [loading , setLoading] = useState(true)
     <View className="flex-1  bg-white">
       <View className="flex-4 p-10 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
             
-            <Image source={{uri: {image}}} style={{width:50,height:50, borderRadius:20}}></Image>
+            <Image source={{uri: image}} style={{width:50,height:50, borderRadius:20}}></Image>
             <Text style={{marginLeft:10, fontWeight:'bold',fontSize:16}}>{name}</Text>
         </View>
       <View className='flex flex-cols  w-full items-center justify-center my-10'>
@@ -42,7 +42,7 @@ const [loading , setLoading] = useState(true)
           <Text className='text-[#CE4257] text-sm font-bold p-2'>แก้ไขโปรไฟล์</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity className='m-8 text-center items-center'>
+        <TouchableOpacity className='m-8 text-center items-center' onPress={()=> navigation.navigate('orderdetails')}>
         <View className='rounded-full w-20 h-20 bg-[#CE4257] justify-center' >
           <Icon name="list" color="white" type='ionicon' size={50} ></Icon>
           </View>
@@ -50,7 +50,7 @@ const [loading , setLoading] = useState(true)
         </TouchableOpacity>
         </View>
         <View className='flex flex-row'>
-        <TouchableOpacity className='m-8 text-center items-center'>
+        <TouchableOpacity className='m-8 text-center items-center' onPress={()=> navigation.navigate('myReview')}>
         <View className='rounded-full w-20 h-20 bg-[#CE4257] justify-center' >
           <Icon name="document-text" color="white" type='ionicon' size={50} ></Icon>
           </View>

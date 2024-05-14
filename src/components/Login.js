@@ -12,22 +12,31 @@ export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {  Login ,user} = useUserAuth();
+
+
+    
 const handleLogin = async ()=>{
+ 
   if(email && password){
     try {
+     
         await Login(email,password)
        
+      
         Toast.show({
           type: 'success',
           text1: 'Login Success',
           text2: 'Welcome to the App'
         })
+       
         setEmail('');
         setPassword('');
+       
         navigation.navigate('main');
         
         
     } catch (error) {
+        
         console.log(error);
         Toast.show({
           type: 'error',
@@ -37,7 +46,8 @@ const handleLogin = async ()=>{
     }
 
   }else{
-    navigation.navigate('main');
+
+   
     Toast.show({
       type: 'error',
       text1: 'Login Failed',
@@ -50,13 +60,16 @@ const handleLogin = async ()=>{
     <>
      <View className="flex-1 items-center justify-center bg-white">
       
+      
     <Image source={Logo} alt='Logo.png'></Image>
 
+    
     <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
     <Input containerStyle={{width: "70%"}} placeholder="Password" secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
     
-
+    
     <Text className="text-sm font-semibold ml-36 my-2" style={{color:"#CE4257"}} onPress={() => navigation.navigate('resetpass')}>Reset Password</Text>
+    
     
     <Button
               title="LOGIN"
@@ -78,6 +91,7 @@ const handleLogin = async ()=>{
               onPress={handleLogin}
             />
            
+             
             <Text className="text-sm font-medium  my-2" >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
     </View>
     

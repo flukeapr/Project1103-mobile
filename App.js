@@ -12,8 +12,11 @@ import Main from './navigation/Main';
 import ProductDetail from './src/components/ProductDetail';
 import EditProfile from './src/components/EditProfile';
 import ResetPass from './src/components/ResetPass';
+import OrderDetails from './src/components/OrderDetails';
+import ReviewBook from './src/components/ReviewBook';
+import MyReview from './src/components/MyReview';
 
-
+// Alert config กำหนดค่าต่างๆของตัว Alert
 const toastConfig = {
   /*
     Overwrite 'success' type,
@@ -25,8 +28,8 @@ const toastConfig = {
       style={{ borderLeftColor: 'green',
       borderLeftWidth:7,
       width:'90%',
-      height:80,
-      borderRightColor:'green',
+      height:75,
+      borderRightColor:'white',
       borderRightWidth:7
     }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
@@ -49,8 +52,8 @@ const toastConfig = {
      style={{ borderLeftColor: 'red',
       borderLeftWidth:7,
       width:'90%',
-      height:80,
-      borderRightColor:'red',
+      height:75,
+      borderRightColor:'white',
       borderRightWidth:7
     }}
       contentContainerStyle={{ paddingHorizontal: 15 }}
@@ -80,9 +83,12 @@ export default function App() {
       <Stack.Screen name="productDetail" component={ProductDetail} options={{headerShown: false}} />
       <Stack.Screen name="editprofile" component={EditProfile} options={{headerShown: false}} />
       <Stack.Screen name="resetpass" component={ResetPass} options={{headerShown: false}} />
+      <Stack.Screen name="orderdetails" component={OrderDetails} options={{headerShown: false}} />
+      <Stack.Screen name="reviewBook" component={ReviewBook} options={{headerShown: false}} />
+      <Stack.Screen name='myReview' component={MyReview} options={{headerShown:false}}/>
     </Stack.Navigator>
     <Toast config={toastConfig} />
-    
+   
       </UserAuthContextProvider>
     
   </NavigationContainer>

@@ -67,7 +67,7 @@ export default function ProductDetail({navigation,route}) {
           console.error("Error getting documents: ", error);
         }
     }
-
+    
     useEffect(() => {
         getProductDetail().then(() => setLoading(false));
         
@@ -78,7 +78,7 @@ export default function ProductDetail({navigation,route}) {
       <View className='flex flex-row w-[200] items-center'>
         <Image source={require('../../assets/ProflieThumbnail_reivew.png')} />
         <View className='ml-2'>
-          <Text className='text-[#565656] text-sx pt-1'>{item.User}</Text>
+          <Text className='text-[#565656] text-sx pt-1 '>{item.User}</Text>
           <Text className='text-[#565656]'>{item.Comment}</Text>
         </View>
       </View>
@@ -103,7 +103,7 @@ export default function ProductDetail({navigation,route}) {
           <Skeleton 
            width={300}
            height={450}
-           style={{borderColor:'#CE4257',borderWidth:1,borderRadius:10}}>
+           style={{borderWidth:1,borderRadius:10}}>
             
            </Skeleton>
            <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
@@ -115,9 +115,9 @@ export default function ProductDetail({navigation,route}) {
            
          
         <FlatList
-          ListHeaderComponent={<View>
-               <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }></Image>
-        <Text className='text-lg text-[#CE4257] font-semibold my-2'>{product.name}</Text>
+          ListHeaderComponent={<View >
+               <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10,justifyContent:'center'} }></Image>
+        <Text className='w-[300] text-lg text-[#CE4257] font-semibold my-2 text-ellipsis' >{product.name}</Text>
         <Text>สำนักพิมพ์ {product.publisher}</Text>
         <View className='flex flex-row pt-2 items-center'>
           <Image source={require('../../assets/star.png')} ></Image>
@@ -150,7 +150,7 @@ export default function ProductDetail({navigation,route}) {
         
         
       <View className=' flex-row justify-between'>
-      <Button   buttonStyle={{
+      <Button  buttonStyle={{
                 backgroundColor: '#D9D9D9',
                 width: 210,
                 height: 60,

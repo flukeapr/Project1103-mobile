@@ -45,7 +45,7 @@ export default function Homepage({ navigation }) {
     setVisible(!visible);
     
   };
-
+               
   
   const renderItem = ({ item }) => {
     return (
