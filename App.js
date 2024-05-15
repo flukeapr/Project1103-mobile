@@ -75,7 +75,7 @@ export default function App() {
     
     <NavigationContainer>
       <UserAuthContextProvider>
-      <Stack.Navigator>
+      <Stack.Navigator >
       <Stack.Screen name="login" component={Login} options={{headerShown: false}} />
       <Stack.Screen name="register" component={Register} options={{headerShown: false}} />
       <Stack.Screen name="home" component={Homepage} options={{headerShown: false}} />

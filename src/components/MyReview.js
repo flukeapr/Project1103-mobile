@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity,Image,FlatList, ActivityIndicator } from 'react-native'
+import { View, Text,TouchableOpacity,Image,FlatList, ActivityIndicator, StatusBar, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { collection,getDocs } from 'firebase/firestore';
 import { useUserAuth } from '../context/UserAuthenContext';
@@ -37,7 +37,11 @@ export default function MyReview({navigation}) {
             return stars;
           };
         
-        return ( <View style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
+        return ( 
+            <ScrollView>
+
+           
+        <View style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
         <Image
           source={{ uri: item.image }}
           style={{ width: 100, height: 150, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }
@@ -56,7 +60,8 @@ export default function MyReview({navigation}) {
           
           
         </View>
-      </View>)
+      </View>
+      </ScrollView>)
     }
     useEffect(()=>{
         const unsubscribe = navigation.addListener('focus',()=>{
@@ -67,7 +72,7 @@ export default function MyReview({navigation}) {
   return (
 
     <View>
-      <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
+      <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'
             onPress={() => navigation.navigate("profile")}>
@@ -76,7 +81,7 @@ export default function MyReview({navigation}) {
             </TouchableOpacity>
        
         </View>
-        <View>
+       
             {loading ? (
                 <View className='flex items-center justify-center h-[700]'>
                     <ActivityIndicator size="large" color="#CE4257" />
@@ -84,11 +89,14 @@ export default function MyReview({navigation}) {
                 
             ):(
                 review.length>0 ? (
-                    <FlatList 
+                    
+                        <FlatList 
             data={review}
             renderItem={renderItem}
             keyExtractor={(item)=> item.id}
-            />
+            /> 
+
+           
                 ):(
                     <View className='flex items-center justify-center h-[700]'>
                         <Text className="text-[#CE4257] text-lg font-bold">ยังไม่มีรีวิว</Text>
@@ -98,7 +106,7 @@ export default function MyReview({navigation}) {
                 
             )}
             
-        </View>
+        
     </View>
   )
 }

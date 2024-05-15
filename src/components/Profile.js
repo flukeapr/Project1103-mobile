@@ -1,4 +1,4 @@
-import { View, Text ,TouchableOpacity,Image} from 'react-native'
+import { View, Text ,TouchableOpacity,Image,StatusBar} from 'react-native'
 import {useState,useEffect} from 'react';
 import { Button, Icon } from '@rneui/base';
 import { useUserAuth } from '../context/UserAuthenContext';
@@ -27,8 +27,11 @@ const [loading , setLoading] = useState(true)
     navigation.navigate("login");
   };
   return (
-    <View className="flex-1  bg-white">
-      <View className="flex-4 p-10 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
+    <View className="flex-1  bg-white" >
+      
+
+     
+      <View className="flex-4 p-10 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:120,paddingTop:StatusBar.currentHeight}} >
             
             <Image source={{uri: image}} style={{width:50,height:50, borderRadius:20}}></Image>
             <Text style={{marginLeft:10, fontWeight:'bold',fontSize:16}}>{name}</Text>

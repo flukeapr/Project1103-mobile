@@ -1,11 +1,11 @@
-import { View, Text ,Image,TouchableOpacity, ScrollView,FlatList} from 'react-native'
+import { View, Text ,Image,TouchableOpacity, ScrollView,FlatList, StatusBar} from 'react-native'
 import React, { useEffect ,useState} from 'react'
 import { Button, Skeleton } from '@rneui/base';
 import { db } from "../config/Firebase";
 import { collection, doc ,getDoc, getDocs,where,query,updateDoc,addDoc,increment} from "firebase/firestore";
 import Toast from 'react-native-toast-message';
 import { useUserAuth } from '../context/UserAuthenContext';
-
+import { Icon } from '@rneui/themed';
 
 export default function ProductDetail({navigation,route}) {
     const {id}=route.params
@@ -72,18 +72,43 @@ export default function ProductDetail({navigation,route}) {
         getProductDetail().then(() => setLoading(false));
         
     })
+    
+
+
     const renderItem = ({ item }) => {
+      const renderStars = () => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+          stars.push(
+            
+              <Icon
+                name={i <= item.Rate ? 'star' : 'star-outline'}
+                type='ionicon'
+                size={10}
+                color={i <= item.Rate ? 'yellow' : '#000'}
+              />
+           
+          );
+        }
+        
+        return stars;
+      };
       return (
-        <View className='flex flex-row mt-4 w-full'>
-      <View className='flex flex-row w-[200] items-center'>
+        <View className='flex flex-row mt-4 w-full '>
+      <View className='flex flex-row w-[200]  items-center'>
         <Image source={require('../../assets/ProflieThumbnail_reivew.png')} />
-        <View className='ml-2'>
+        <View className='ml-2 mb-4 w-[200]'>
           <Text className='text-[#565656] text-sx pt-1 '>{item.User}</Text>
-          <Text className='text-[#565656]'>{item.Comment}</Text>
+          <Text className='text-[#565656]'>{item.Comment} </Text>
+          <View className='flex flex-row'>
+          {renderStars()}
+          </View>
+          
         </View>
       </View>
       <View className='flex justify-end'>
         <Text className='text-[#565656]'>{item.Date}</Text>
+        
       </View>
     </View>
         
@@ -91,7 +116,7 @@ export default function ProductDetail({navigation,route}) {
     };
   return (
     <View className='flex-1 justify-between bg-white'>
-        <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
+        <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity onPress={() => navigation.navigate("main")}>
             <Image source={require('../../assets/prev.png')}></Image>
             </TouchableOpacity>

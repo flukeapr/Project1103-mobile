@@ -1,4 +1,4 @@
-import { View, Text,ActivityIndicator ,FlatList,Image,TouchableOpacity } from "react-native";
+import { View, Text,ActivityIndicator ,FlatList,Image,TouchableOpacity,StatusBar } from "react-native";
 import { useState, useEffect } from "react";
 import { Button,Icon,Overlay } from "@rneui/base";
 import { useUserAuth } from "../context/UserAuthenContext";

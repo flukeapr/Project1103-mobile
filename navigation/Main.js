@@ -10,7 +10,7 @@ import { Icon } from "@rneui/base";
 const Tab = createBottomTabNavigator();
 export default function Main() {
   return (
-    <Tab.Navigator
+    <Tab.Navigator 
       initialRouteName="home"
       screenOptions={{
         headerShown: false,

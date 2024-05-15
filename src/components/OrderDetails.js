@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity,Image,FlatList, ActivityIndicator } from 'react-native'
+import { View, Text,TouchableOpacity,Image,FlatList, ActivityIndicator,StatusBar, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react';
 import { doc,getDoc,getDocs,where,collection,query } from 'firebase/firestore';
 import { useUserAuth } from '../context/UserAuthenContext';
@@ -25,7 +25,9 @@ export default function OrderDetails({navigation}) {
     }
     const renderItem = ({ item }) => {
         return (
-         
+      
+
+        
             <View style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
                <Image
           source={{ uri: item.image }}
@@ -43,7 +45,7 @@ export default function OrderDetails({navigation}) {
         
         </View>
       </View>
-           
+    
           
          
             
@@ -62,8 +64,8 @@ export default function OrderDetails({navigation}) {
     
     
   return (
-    <View>
-         <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
+    <View >
+         <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'
             onPress={() => navigation.navigate("profile")}>
@@ -94,6 +96,7 @@ export default function OrderDetails({navigation}) {
         )
         
       )}
+      
         </View>
       
     </View>
