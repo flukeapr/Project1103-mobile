@@ -7,6 +7,9 @@ import { addDoc, collection, doc, increment, updateDoc } from 'firebase/firestor
 import { useUserAuth } from '../context/UserAuthenContext';
 import Toast from 'react-native-toast-message';
 import { db } from '../config/Firebase';
+import RenderStar from '../components/RenderStar';
+
+
 
 export default function ReviewBook({navigation,route}) {
     const {product} = route.params
@@ -92,7 +95,7 @@ const renderStars = () => {
             name={i <= rating ? 'star' : 'star-outline'}
             type='ionicon'
             size={40}
-            color={i <= rating ? 'yellow' : '#000'}
+            color={i <= rating ? '#FFC107' : '#000'}
           />
         </TouchableOpacity>
       );

@@ -29,7 +29,7 @@ function logOut(){
         return ()=>{
             unsubscribe();
         }
-    })
+    },[auth])
 
 
   return (

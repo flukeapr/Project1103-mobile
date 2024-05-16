@@ -1,10 +1,10 @@
-import { View, Text,TouchableOpacity,Image } from 'react-native'
+import { View, Text,TouchableOpacity,Image,StatusBar } from 'react-native'
 import React from 'react'
 
 export default function EditProfile({navigation}) {
   return (
     <View>
-       <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100}}>
+       <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'
             onPress={() => navigation.navigate("profile")}>
@@ -13,6 +13,9 @@ export default function EditProfile({navigation}) {
             </TouchableOpacity>
        
         
+        </View>
+        <View>
+          
         </View>
     </View>
   )

@@ -38,7 +38,7 @@ export default function MyReview({navigation}) {
           };
         
         return ( 
-            <ScrollView>
+          
 
            
         <View style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
@@ -61,7 +61,7 @@ export default function MyReview({navigation}) {
           
         </View>
       </View>
-      </ScrollView>)
+     )
     }
     useEffect(()=>{
         const unsubscribe = navigation.addListener('focus',()=>{
@@ -90,13 +90,11 @@ export default function MyReview({navigation}) {
             ):(
                 review.length>0 ? (
                     
-                        <FlatList 
+            <FlatList 
             data={review}
             renderItem={renderItem}
             keyExtractor={(item)=> item.id}
             /> 
-
-           
                 ):(
                     <View className='flex items-center justify-center h-[700]'>
                         <Text className="text-[#CE4257] text-lg font-bold">ยังไม่มีรีวิว</Text>

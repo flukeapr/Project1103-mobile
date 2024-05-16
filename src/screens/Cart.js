@@ -2,12 +2,13 @@ import { View, Text, PermissionsAndroid,Image,ActivityIndicator,FlatList, Scroll
 import React, { useState,useEffect,useCallback, useRef } from 'react';
 import { Button,Icon } from '@rneui/base';
 import Voice from 'react-native-voice';
-import Tobtabs from './Tobtabs';
+import Tobtabs from '../components/Tobtabs';
 import { useUserAuth } from '../context/UserAuthenContext';
 import { getDocs, collection, increment,doc,updateDoc,deleteDoc ,getDoc,addDoc} from 'firebase/firestore';
 import { db } from '../config/Firebase';
 import Toast from 'react-native-toast-message';
 import ActionSheet from 'react-native-actions-sheet';
+import { useAccelerometer } from '../context/UseAccelerometerContext';
 
 export default function Cart({navigation}) {
   const [products ,setProducts] = useState([]);
@@ -15,7 +16,7 @@ export default function Cart({navigation}) {
   const [loading , setLoading] = useState(true);
 const actionSheetRef = useRef(null);
   const [total , setTotal] = useState(0);
- 
+ const {isPortrait} = useAccelerometer();
   
 
   
@@ -239,7 +240,10 @@ const actionSheetRef = useRef(null);
               data={products}
               renderItem={renderItem}
               keyExtractor={(item) => item.id}
+              numColumns={isPortrait ? 1 : 2}
+              key={isPortrait ? 'portrait' : 'landscape'}
             />
+            
            ) : (
             <View className='flex items-center justify-center h-full'>
               <Text className='text-[#CE4257]  font-bold'>ไม่มีสินค้าในตระกร้า</Text>
@@ -255,8 +259,8 @@ const actionSheetRef = useRef(null);
     <View className=' flex-row justify-between'>
       <Button   buttonStyle={{
                 backgroundColor: '#D9D9D9',
-                width: 210,
-                height: 60,
+                width: isPortrait ? 210 : 400,
+                height:isPortrait ? 60 : 40,
 
               }}
               title={`ราคารวม ${total}.00 บาท`}
@@ -264,8 +268,8 @@ const actionSheetRef = useRef(null);
     
       <Button onPress={()=>actionSheetRef.current?.show()}  buttonStyle={{
                 backgroundColor: '#720026',
-                width: 210,
-                height: 60,
+                width:isPortrait ? 210 : 400,
+                height: isPortrait ? 60 : 40,
               }}
               titleStyle={{ color: 'white',fontWeight:'bold' }}
               title={"ชำระเงิน"} 
@@ -280,25 +284,26 @@ const actionSheetRef = useRef(null);
 
       <View className='flex h-[300]'>
         <View className='flex flex-row items-center justify-between pl-2 pr-2'>
-        <Text className='text-[#CE4257] font-bold p-4'>ชำระเงิน</Text>
+        <Text className='text-[#720026] font-bold p-4'>รายการชำระเงินทั้งหมด</Text>
         <TouchableOpacity onPress={()=> actionSheetRef.current?.hide()}>
         <Icon name='close-circle-outline' type='ionicon'></Icon>
         </TouchableOpacity>
        
         </View>
         
-        <View className='w-full'>
+        <View className='w-full h-[120] '>
         <FlatList
               style={{}}
               data={products}
               renderItem={renderOrderItem}
               keyExtractor={(item) => item.id}
-              ListFooterComponent={<View className='flex items-end'>
-                <Text className='text-[#CE4257] font-bold p-4'>ราคารวม {total}.00 บาท</Text>
-              </View>}
+             
             />
         </View>
-        <View className='flex flex-row justify-center m-2'>
+        <View className='flex items-end justify-end h-[60]'>
+                <Text className='text-[#CE4257] font-bold p-4'>ราคารวม {total}.00 บาท</Text>
+              </View>
+        <View className='flex flex-row justify-center '>
         <Button onPress={orderItem} title={"สั่งซื้อสินค้า"} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#720026'}} titleStyle={{fontWeight:'bold'}}/>
 
         </View>
