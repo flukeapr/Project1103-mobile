@@ -7,6 +7,7 @@ import { db } from "../config/Firebase";
 import { doc, getDocs, collection ,query, where } from "firebase/firestore";
 import ProductCard from "../components/ProductCard";
 import { useAccelerometer } from "../context/UseAccelerometerContext";
+import { useFonts } from "expo-font";
 
 export default function Homepage({ navigation }) {
   const [products, setProducts] = useState([]);
@@ -16,7 +17,7 @@ export default function Homepage({ navigation }) {
   const [visible, setVisible] = useState(false);
 const [landscape ,setLandscape] = useState(false);
 const {isPortrait} = useAccelerometer();
-  
+
   
   const getBooks = async () => {
     try {

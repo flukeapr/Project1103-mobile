@@ -9,7 +9,7 @@ import { Icon } from '@rneui/themed';
 import RenderStar from '../components/RenderStar';
 import * as Speech from 'expo-speech'
 import { useAccelerometer } from '../context/UseAccelerometerContext';
-
+import { useFonts } from 'expo-font';
 export default function ProductDetail({navigation,route}) {
     const {id}=route.params
     const [product, setProduct] = useState({});
@@ -17,6 +17,7 @@ export default function ProductDetail({navigation,route}) {
     const {user} = useUserAuth();
     const [isplay,setIsplay] = useState(false);
   const {isPortrait} = useAccelerometer();
+
     const addToCart = async ()=>{
       try {
         const cartRef = collection(db, 'Users', user.uid, 'Cart');
@@ -115,7 +116,7 @@ export default function ProductDetail({navigation,route}) {
     
   return (
     <>
-      {isPortrait ? (
+     
            <View className='flex-1 justify-between bg-white'>
            <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
                <TouchableOpacity onPress={() => navigation.navigate("main")}>
@@ -145,18 +146,18 @@ export default function ProductDetail({navigation,route}) {
            <FlatList
              ListHeaderComponent={<View >
                   <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10,justifyContent:'center'} }></Image>
-           <Text className='w-[300] text-lg text-[#CE4257] font-semibold my-2 text-ellipsis' >{product.name}</Text>
-           <Text>สำนักพิมพ์ {product.publisher}</Text>
+           <Text className='w-[300] text-lg text-[#CE4257] font-semibold my-2 text-ellipsis' style={{fontSize:18}}>{product.name}</Text>
+           <Text style={{fontSize:16}}>สำนักพิมพ์ {product.publisher}</Text>
    
            <View className='flex flex-row pt-2 items-center'>
              <Image source={require('../../assets/star.png')} ></Image>
-           <Text> {product.reviews} รีวิว</Text>
+           <Text style={{fontSize:16}}> {product.reviews} รีวิว</Text>
    
            </View>
-           <Text className='pt-4'>เนื้อเรื่องโดยย่อ</Text>
-           <Text className='w-[300]'>{product.story}</Text>
+           <Text className='pt-4' style={{fontSize:16}}>เนื้อเรื่องโดยย่อ</Text>
+           <Text className='w-[300]' style={{fontSize:16}}>{product.story}</Text>
            <View className='flex flex-row items-center justify-center m-2'>
-             <Button title={"กดเพื่อฟังเนื้อเรื่อง"} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#ff9d8a' }} onPress={()=>setIsplay(!isplay)}/>
+             <Button title={"กดเพื่อฟังเนื้อเรื่อง"} titleStyle={{fontSize:18,fontWeight:'bold'}} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#ff9d8a' }} onPress={()=>setIsplay(!isplay)}/>
            </View>
              <View className=''>
              <Text className='text-lg text-[#CE4257] font-semibold mt-6'>รีวิวหนังสือ</Text>
@@ -170,7 +171,7 @@ export default function ProductDetail({navigation,route}) {
              data={product.Review}
              renderItem={renderItem}
              keyExtractor={(item) => item.id}
-             key={isPortrait ? 'portrait' : 'landscape'}
+            
            />
               
             
@@ -190,7 +191,7 @@ export default function ProductDetail({navigation,route}) {
    
                  }}
                  title={`${product.price}.00 บาท`}
-                 titleStyle={{ color: '#CE4257',fontWeight:'100' }}></Button>
+                 titleStyle={{ color: '#CE4257',fontWeight:'bold' }}></Button>
        
          <Button onPress={addToCart} buttonStyle={{
                    backgroundColor: '#720026',
@@ -206,70 +207,8 @@ export default function ProductDetail({navigation,route}) {
          </View>
         
        </View>
-      ):(
-        <View className='flex-1 justify-between bg-white'>
-        <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
-            <TouchableOpacity onPress={() => navigation.navigate("main")}>
-            <Image source={require('../../assets/prev.png')}></Image>
-           
-            </TouchableOpacity>
-        </View>
+     
         
-       
-        {loading ? (
-          <View className='flex-1  bg-white items-center pt-10' >
-          <Skeleton 
-           width={300}
-           height={450}
-           style={{borderWidth:1,borderRadius:10}}>
-            
-           </Skeleton>
-           <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
-           <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
-           <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>
-          </View>
-        ) : (
-        
-          <View className='flex-1  bg-white ml-2 pt-5 mb-4'>
-           
-           <View className='flex flex-row'>
-               <Image source={{uri:product.image}}  style={{ width: 300, height: 450, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10,justifyContent:'center'} }></Image>
-        <Text className='w-[300] text-lg text-[#CE4257] font-semibold my-2 text-ellipsis' >{product.name}</Text>
-        <Text>สำนักพิมพ์ {product.publisher}</Text>
-
-        <View className='flex flex-row pt-2 items-center'>
-          <Image source={require('../../assets/star.png')} ></Image>
-        <Text> {product.reviews} รีวิว</Text>
-
-        </View>
-        <Text className='pt-4'>เนื้อเรื่องโดยย่อ</Text>
-        <Text className='w-[300]'>{product.story}</Text>
-        <View className='flex flex-row items-center justify-center m-2'>
-          <Button title={"กดเพื่อฟังเนื้อเรื่อง"} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#ff9d8a' }} onPress={()=>setIsplay(!isplay)}/>
-        </View>
-          <View className=''>
-          <Text className='text-lg text-[#CE4257] font-semibold mt-6'>รีวิวหนังสือ</Text>
-          <View className='flex flex-row pt-2 items-center'>
-          <Image source={require('../../assets/star.png')} ></Image>
-        <Text> {product.reviews} รีวิว</Text>
-          
-        </View>
-        </View>
-          </View>
-        <FlatList
-          
-          data={product.Review}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          key={isPortrait ? 'portrait' : 'landscape'}
-        />
-           
-         
-         
-           
-       
-        </View>
-        )}
         
         
         
@@ -296,8 +235,8 @@ export default function ProductDetail({navigation,route}) {
                />}></Button>
       </View> */}
      
-    </View>
-      )}
+    
+      
     
     </>
    

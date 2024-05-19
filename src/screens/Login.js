@@ -9,13 +9,17 @@ import { db,auth } from '../config/Firebase';
 import { useUserAuth } from '../context/UserAuthenContext';
 import { Dimensions } from 'react-native';
 import { useAccelerometer } from '../context/UseAccelerometerContext';
-
+import { useFonts } from 'expo-font';
+import LogoLandscape from '../../assets/Logo-landscape.png'
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {  Login ,user} = useUserAuth();
   const { isPortrait } = useAccelerometer()
-
+  const [fontsLoaded, fontError] = useFonts({
+    'Bebas': require('../../assets/fonts/BebasNeue-Regular.ttf'),
+    'Roboto': require('../../assets/fonts/Roboto-Regular.ttf'),
+  });
     
 const handleLogin = async ()=>{
  
@@ -64,50 +68,52 @@ const handleLogin = async ()=>{
       <>
       <View className="flex-1 items-center justify-center bg-white">
       
-      
+      <View className='flex-1 w-full items-center justify-center'>
       <Image source={Logo} alt='Logo.png'></Image>
   
-      
-      <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
-      <Input containerStyle={{width: "70%"}} placeholder="Password" secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
-      
-      
-      <Text className="text-sm font-semibold ml-36 my-2" style={{color:"#CE4257"}} onPress={() => navigation.navigate('resetpass')}>Reset Password</Text>
-      
-      
-      <Button
-                title="LOGIN"
-                buttonStyle={{
-                  backgroundColor: '#ff9d8a',
-                  
-                  borderWidth: 2,
-                  borderColor: 'white',
-                  borderRadius: 10,
-                }}
-                containerStyle={{
-                  width: 250,
-                  marginHorizontal: 50,
-                  marginVertical: 10,
-                  
-                }}
-                titleStyle={{ fontWeight: 'bold',fontSize: 20 }}
-                size='lg'
-                onPress={handleLogin}
-              />
-             
-               
-              <Text className="text-sm font-medium  my-2" >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
+  <Text style={styles.storeName}>ReadMe Store</Text>
+  <Input containerStyle={{width: "70%"}} placeholder="Email"  inputStyle={{fontFamily:'Roboto'}}   leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
+  <Input containerStyle={{width: "70%"}} placeholder="Password" inputStyle={{fontFamily:'Roboto'}} secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
+  
+  
+  <Text className="text-sm font-semibold ml-36 my-2" style={{color:"#CE4257",fontFamily:'Roboto'}} onPress={() => navigation.navigate('resetpass')}>Reset Password</Text>
+  
+  
+  <Button
+            title="LOGIN"
+            buttonStyle={{
+              backgroundColor: '#ff9d8a',
+              
+              borderWidth: 2,
+              borderColor: 'white',
+              borderRadius: 10,
+            }}
+            containerStyle={{
+              width: 250,
+              marginHorizontal: 50,
+              marginVertical: 10,
+              
+            }}
+            titleStyle={{fontSize: 30,fontFamily:'Bebas'}}
+            size='lg'
+            onPress={handleLogin}
+          />
+         
+           
+          <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
       </View>
-      
       <View className="flex-3 bg-white pt-2">
           <Image source={LayerBottom}></Image>
       </View>
+      </View>
+      
+     
       </>
     ): (
       <>
        <View className="flex flex-row items-center" style={styles.landscape}>
         <View style={styles.container}>
-        <Image source={Logo} alt='Logo.png'></Image>
+        <Image source={LogoLandscape} alt='Logo.png'></Image>
         </View>
         
 
@@ -190,4 +196,10 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 24,
   },
+  storeName:{
+    fontSize:24,
+    fontFamily:'Bebas',
+    color:'#CE4257',
+    margin:10
+  }
 });

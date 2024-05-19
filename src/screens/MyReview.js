@@ -4,6 +4,7 @@ import { collection,getDocs } from 'firebase/firestore';
 import { useUserAuth } from '../context/UserAuthenContext';
 import { db } from '../config/Firebase';
 import { Icon } from '@rneui/base';
+import RenderStar from '../components/RenderStar';
 export default function MyReview({navigation}) {
     const {user} = useUserAuth();
     const [review,setReview] = useState([])
@@ -19,23 +20,7 @@ export default function MyReview({navigation}) {
         setReview(myReview);
     }
     const renderItem = ({ item }) =>{
-        const renderStars = () => {
-            const stars = [];
-            for (let i = 1; i <= 5; i++) {
-              stars.push(
-                
-                  <Icon 
-                    name={i <= item.Rate ? 'star' : 'star-outline'}
-                    type='ionicon'
-                    size={15}
-                    color={i <= item.Rate ? 'yellow' : '#000'}
-                  />
-                
-              );
-            }
-            
-            return stars;
-          };
+      
         
         return ( 
           
@@ -49,7 +34,7 @@ export default function MyReview({navigation}) {
         <View className='flex justify-between'>
             <View>
             <Text className="text-[#CE4257] w-[250] font-semibold" numberOfLines={1} >{item.book_name}</Text>
-            <View className='flex flex-row p-1'>{renderStars()}</View>
+            <View className='flex flex-row p-1'><RenderStar Rate={item.Rate} Size={15}/></View>
             <Text>{item.Comment}</Text>
             </View>
             

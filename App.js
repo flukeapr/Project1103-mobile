@@ -19,6 +19,8 @@ import TestPage from './src/screens/TestPage';
 import { useState,useEffect } from 'react';
 import { AccelerometerProvider } from './src/context/UseAccelerometerContext';
 
+
+// font Header (Bebas Neue) + Body (Roboto)
 // Alert config กำหนดค่าต่างๆของตัว Alert
 const toastConfig = {
   /*

@@ -15,15 +15,7 @@ export default function Profile({ navigation }) {
 const [image, setImage] = useState("");
 const [loading , setLoading] = useState(true)
 const {isPortrait} = useAccelerometer();
-  const getUser = async()=>{
-    const userRef = doc(db,"Users", user.uid);
-    const docSnap = await getDoc(userRef);
-    setName(docSnap.data().fullName);
-    setImage(docSnap.data().image|| "")
-  }
-  useEffect(()=>{
-    getUser().then(setLoading(false))
-  })
+
 
 
   const handleLogout = async () => {
@@ -31,22 +23,18 @@ const {isPortrait} = useAccelerometer();
     navigation.navigate("login");
   };
   return (
-    <View className="flex-1  bg-white" >
-      
-
-     
-      
-            {loading ? (
-            <Skeleton  width={300} height={20} style={{borderRadius:20,margin:6}}></Skeleton>)
-            :(
+    <View className="flex-1  bg-white" >      
               <View className="flex-4 p-5 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:isPortrait ? 120 : 100,paddingTop:StatusBar.currentHeight}} >
-                    <Image source={{uri: image}} style={{width:50,height:50, borderRadius:20}}></Image>
-               <Text style={{marginLeft:10, fontWeight:'bold',fontSize:16}}>{name}</Text>
+              {user ? (
+          <>
+            <Image source={{ uri: user.photoURL }} style={{ width: 50, height: 50, borderRadius: 20 }} />
+            <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 16,color:'white' }}>{user.displayName}</Text>
+          </>
+        ) : (
+          <Skeleton style={{ width: 50, height: 50, borderRadius: 20 }} />
+        )}
                </View>
-             
-            )}
-           
-        
+
       <View className='flex   w-full items-center justify-center my-10' style={{flexDirection:`${isPortrait ? 'column' : 'row'}`}}>
         <View className='flex flex-row '>
        <ButtonPageProfile name={"แก้ไขโปรไฟล์"} icon={"create"} page={"EditProfile"}/>
@@ -61,7 +49,7 @@ const {isPortrait} = useAccelerometer();
           <Text className='text-[#CE4257] text-sm font-bold p-2'>ออกจากระบบ</Text>
         </TouchableOpacity>
         </View>
-        <ButtonPageProfile name={"testpage"} icon={"document-text"} page={"TestPage"}/>
+      
         
       </View>
       

@@ -1,22 +1,28 @@
-import { View, Text,Image } from 'react-native'
+import { View, Text,Image, TouchableOpacity } from 'react-native'
 import {useState} from 'react';
 import Logo from '../../assets/Logo.png';
-import { Button,Input } from '@rneui/themed';
+import { Button,Icon,Input } from '@rneui/themed';
 import LayerBottom from '../../assets/layerBottom.png';
+import { useFonts } from 'expo-font';
 
 export default function ResetPass({navigation}) {
     const [email, setEmail] = useState('');
+    const [fontsLoaded, fontError] = useFonts({
+      'Bebas': require('../../assets/fonts/BebasNeue-Regular.ttf'),
+      'Roboto': require('../../assets/fonts/Roboto-Regular.ttf'),
+    });
   return (
     <>
     <View className="flex-1 items-center justify-center bg-white">
        <Image source={Logo} alt='Logo.png'></Image>
-       <Text className='m-8 text-[#CE4257] font-bold'>Reset Password</Text>
+       <Text className='m-8 text-[#CE4257] 'style={{fontFamily:'Bebas',fontSize:24}}>Reset Password</Text>
        <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
         
+
         <Button
               title="Send Email"
               buttonStyle={{
-                backgroundColor: '#CE4257',
+                backgroundColor: '#ff9d8a',
                 
                 borderWidth: 2,
                 borderColor: 'white',
@@ -27,29 +33,18 @@ export default function ResetPass({navigation}) {
                 marginVertical: 10,
                 
               }}
-              titleStyle={{ fontWeight: 'bold',fontSize: 20 }}
+              titleStyle={{ fontFamily:'Bebas',fontSize: 24 }}
               size='lg'
              
             />
-            <Button
-              title="Back"
-              buttonStyle={{
-                backgroundColor: 'white',
-                
-                borderWidth: 2,
-                borderColor: '#CE4257',
-                borderRadius: 10,
-              }}
-              containerStyle={{
-                width: 200,
-                marginVertical: 10,
-                
-              }}
-              titleStyle={{ fontWeight: 'bold',fontSize: 20 ,color:'#CE4257'}}
-              size='lg'
-             onPress={() => navigation.navigate('login')}
-            />
-       
+           <TouchableOpacity className='flex flex-row items-center' onPress={() => navigation.navigate('login')}>
+           <Icon name='chevron-back' type='ionicon'></Icon>
+           <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Back to <Text className="text-[#CE4257]" >LogIn</Text> </Text>
+
+           </TouchableOpacity>
+
+            
+
        
     </View>
     <View className="flex-3 bg-white pt-2">
