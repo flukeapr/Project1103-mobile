@@ -34,14 +34,14 @@ export default function OrderDetails({navigation}) {
           style={{ width: 100, height: 150, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }
         />
         <View>
-          <Text className="text-[#CE4257] w-[250] font-semibold" numberOfLines={1} ellipsizeMode="tail">{item.book_name}</Text>
+          <Text className="text-[#CE4257] w-[250] font-semibold" style={{fontSize:16}} numberOfLines={1} ellipsizeMode="tail">{item.book_name}</Text>
           
-          <Text className="text-xs py-1 ]">สถานะ {item.status}</Text>
-          <Text className="text-xs py-1">จำนวน {item.quantity} ชิ้น</Text>
-          <Text className="text-xs py-1">ราคารวม {item.total}.00 บาท</Text>
+          <Text className="text-xs py-1 ]"  style={{fontSize:14}}>สถานะ: {item.status}</Text>
+          <Text className="text-xs py-1"  style={{fontSize:14}}>จำนวน {item.quantity} ชิ้น</Text>
+          <Text className="text-xs py-1"  style={{fontSize:14}}>ราคารวม {item.total}.00 บาท</Text>
           
           <Button disabled={item.review==="รอรีวิว" ? false : true} onPress={() => navigation.navigate("reviewBook", { product: item })}
-          title={"รีวิวหนังสือ"} buttonStyle={{width:125,height:35,borderRadius:30,backgroundColor:'#CE4257'}} containerStyle={{margin:10}} titleStyle={{fontSize:14}}/>
+          title={"รีวิวหนังสือ"} buttonStyle={{width:125,height:35,borderRadius:30,backgroundColor:'#CE4257'}} containerStyle={{margin:10}} titleStyle={{fontSize:14,fontWeight:'bold'}}/>
         
         </View>
       </View>
@@ -64,7 +64,7 @@ export default function OrderDetails({navigation}) {
     
     
   return (
-    <View >
+    <View className='bg-white'>
          <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'

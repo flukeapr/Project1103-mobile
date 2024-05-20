@@ -56,7 +56,7 @@ export default function MyReview({navigation}) {
     },[navigation])
   return (
 
-    <View>
+    <View className='bg-white'>
       <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'

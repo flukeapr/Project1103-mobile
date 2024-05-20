@@ -22,7 +22,7 @@ export default function Chat() {
       const messagesCollection = collection(chatDoc, "messages");
       const q = query(messagesCollection, orderBy("createdAt", 'desc'));
       const unSubscribe = onSnapshot(q, (querySnap) => {
-          const allmsg = querySnap.docs.map(docSnap => {
+          const allMsg = querySnap.docs.map(docSnap => {
               const data = docSnap.data();
               return {
                   ...data,
@@ -30,7 +30,7 @@ export default function Chat() {
                   position: data.sendBy === user.uid ? 'right' : 'left',
               };
           });
-          setMessages(allmsg);
+          setMessages(allMsg);
       });
 
       return () => unSubscribe();
@@ -66,11 +66,13 @@ export default function Chat() {
   }
 
   return (
-      <GestureHandlerRootView style={{ flex: 1, paddingTop: StatusBar.currentHeight, justifyContent: 'space-between' }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 40, width: '100%', backgroundColor: '#CE4257' }}>
-              <Text style={{ color: '#fff', fontSize: 18, paddingRight: 8 }}>Chat</Text>
-              <Icon name="chatbubble-ellipses" type='ionicon' color={"#fff"} size={20} />
+    <>
+     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 100, width: '100%', backgroundColor: '#CE4257',paddingTop:StatusBar.currentHeight }}>
+              <Text style={{ color: '#fff', fontSize: 22, paddingRight: 8 }}>Chat</Text>
+              <Icon name="chatbubble-ellipses" type='ionicon' color={"#fff"} size={25} />
           </View>
+        <GestureHandlerRootView style={{ flex: 1,  justifyContent: 'space-between',backgroundColor:'white' }} >
+         
           <GiftedChat
               messages={messages}
               onSend={messages => onSend(messages)}
@@ -79,12 +81,30 @@ export default function Chat() {
               }}
               renderBubble={props => (
                   <Bubble {...props} wrapperStyle={{
-                      right: { backgroundColor: '#CE4257' },
-                      left: { backgroundColor: 'white' },
+                      right: { backgroundColor: '#CE4257',borderColor:'black',borderWidth:1 },
+                      left: { backgroundColor: 'white',borderColor:'black',borderWidth:1 },
                   }} />
               )}
+              textInputProps={
+                {
+                 
+                  placeholderTextColor: 'black',
+                  style: {
+                    backgroundColor: 'white',
+                    borderRadius: 20,
+                    width: '100%',
+                    paddingLeft:3,
+                    borderColor:'black',
+                    marginVertical: 10,
+
+                  }
+                }
+              }
+              
           />
         
       </GestureHandlerRootView>
+    </>
+      
   );
 }

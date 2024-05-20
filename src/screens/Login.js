@@ -200,6 +200,6 @@ const styles = StyleSheet.create({
     fontSize:24,
     fontFamily:'Bebas',
     color:'#CE4257',
-    margin:10
+    margin:20
   }
 });

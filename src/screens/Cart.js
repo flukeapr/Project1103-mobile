@@ -177,8 +177,8 @@ const actionSheetRef = useRef(null);
         />
         <View>
           <View>
-            <Text className="text-[#CE4257] w-[250] font-semibold" numberOfLines={1} >{item.name}</Text>
-            <Text className="text-xs py-1">ราคา {item.price}.00 บาท</Text>
+            <Text className="text-[#CE4257] w-[250] font-semibold" style={{fontSize:16}} numberOfLines={1} >{item.name}</Text>
+            <Text className="text-xs py-1" style={{fontSize:14}}>ราคา {item.price}.00 บาท</Text>
           </View>
           
           <View className='flex justify-between flex-row'>
@@ -211,8 +211,8 @@ const actionSheetRef = useRef(null);
         
         <View>
           <View>
-            <Text className="text-[#CE4257] w-[250] font-semibold" numberOfLines={1} >{item.name}</Text>
-            <Text className="text-xs py-1">ราคา {item.price}.00 บาท * {item.quantity}</Text>
+            <Text className="text-[#CE4257] w-[250] font-semibold" style={{fontSize:16}} numberOfLines={1} >{item.name}</Text>
+            <Text className="text-xs py-1" style={{fontSize:14}}>ราคา {item.price}.00 บาท * {item.quantity}</Text>
           </View>
           
          
@@ -284,7 +284,7 @@ const actionSheetRef = useRef(null);
 
       <View className='flex h-[300]'>
         <View className='flex flex-row items-center justify-between pl-2 pr-2'>
-        <Text className='text-[#720026] font-bold p-4'>รายการชำระเงินทั้งหมด</Text>
+        <Text className='text-[#720026] text-xl font-bold p-4'>รายการชำระเงินทั้งหมด</Text>
         <TouchableOpacity onPress={()=> actionSheetRef.current?.hide()}>
         <Icon name='close-circle-outline' type='ionicon'></Icon>
         </TouchableOpacity>
