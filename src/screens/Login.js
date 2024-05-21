@@ -1,4 +1,4 @@
-import { View, Image,Text,StyleSheet,StatusBar } from 'react-native'
+import { View, Image,Text,StyleSheet,StatusBar, KeyboardAvoidingView, Platform } from 'react-native'
 import {useState,useEffect} from 'react';
 import { Button } from '@rneui/themed';
 import Logo from '../../assets/Logo.png';
@@ -66,10 +66,14 @@ const handleLogin = async ()=>{
     <>
     {isPortrait ? (
       <>
-      <View className="flex-1 items-center justify-center bg-white">
       
-      <View className='flex-1 w-full items-center justify-center'>
+
+     
+      <View className="flex-1 items-center justify-between bg-white" style={{paddingTop:StatusBar.currentHeight+10}}>
+      
+      <View className=' w-full items-center justify-center'>
       <Image source={Logo} alt='Logo.png'></Image>
+
   
   <Text style={styles.storeName}>ReadMe Store</Text>
   <Input containerStyle={{width: "70%"}} placeholder="Email"  inputStyle={{fontFamily:'Roboto'}}   leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
@@ -100,13 +104,14 @@ const handleLogin = async ()=>{
           />
          
            
-          <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
+          <Text className="text-sm font-medium  "style={{fontFamily:'Roboto'}} >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
+        
       </View>
-      <View className="flex-3 bg-white pt-2">
-          <Image source={LayerBottom}></Image>
+       <View >
+       <Image source={LayerBottom} ></Image>
+      </View> 
       </View>
-      </View>
-      
+    
      
       </>
     ): (
@@ -115,10 +120,8 @@ const handleLogin = async ()=>{
         <View style={styles.container}>
         <Image source={LogoLandscape} alt='Logo.png'></Image>
         </View>
-        
-
         <View className='p-10 items-center'>
-          <Text className='text-lg font-semibold text-[#CE4257]'>Welcome Back</Text>
+          <Text className=' font-semibold text-[#CE4257]' style={{fontFamily:"Bebas",fontSize:26}}>Welcome Back</Text>
         <Input containerStyle={{width: "100%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
       <Input containerStyle={{width: "100%"}} placeholder="Password" secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
 
@@ -137,7 +140,7 @@ const handleLogin = async ()=>{
                   marginVertical: 10,
                   
                 }}
-                titleStyle={{ fontWeight: 'bold',fontSize: 20 }}
+                titleStyle={{ fontFamily:'Bebas',fontSize: 25 }}
                 size='lg'
                 onPress={handleLogin}
               />

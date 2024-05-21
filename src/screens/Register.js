@@ -97,7 +97,10 @@ export default function Register({navigation}) {
     <>
     
    
-    <View className="flex-1 items-center justify-center bg-white pt-2" style={{paddingTop:StatusBar.currentHeight}}>
+    <View className="flex-1 items-center justify-between bg-white pt-2" style={{paddingTop:StatusBar.currentHeight+10}}>
+     
+     <View className='items-center'>
+
      
      <View className=' flex flex-row w-full ' >
       <View className='flex flex-col  w-full items-center justify-center'>
@@ -127,7 +130,7 @@ export default function Register({navigation}) {
               containerStyle={{
                 width: 250,
               }}
-              titleStyle={{ fontWeight: 'bold',fontSize: 20 }}
+              titleStyle={{fontFamily:'Bebas',fontSize: 30 }}
               size='lg'
              onPress={handleSubmit
             }
@@ -140,18 +143,17 @@ export default function Register({navigation}) {
        
      </View>
      <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Already have account ? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('login')}>LogIn</Text> </Text>
-
+     </View>
       
       
      
       
      
-           
-            
+      <View>
+      <Image source={LayerBottom}  style={{marginTop:125}}></Image>
+      </View>
     </View>
-    <View className="flex-2 bg-white ">
-     <Image source={LayerBottom}  ></Image>
- </View>
+   
  </>
   )
 }

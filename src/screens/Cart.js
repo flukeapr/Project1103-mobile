@@ -232,7 +232,9 @@ const actionSheetRef = useRef(null);
     <View className="flex-1 justify-between items-center bg-white">
       <View>
         {loading ? (
-            <ActivityIndicator size="large" color="#CE4257" />
+          <View className='flex items-center justify-center h-[700]'>
+           <ActivityIndicator size="large" color="#CE4257" />
+          </View>
          ) : (
            products.length>0 ?(
             <FlatList

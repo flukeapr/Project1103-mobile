@@ -5,6 +5,7 @@ import { useUserAuth } from '../context/UserAuthenContext';
 import { db } from '../config/Firebase';
 import { Icon } from '@rneui/base';
 import RenderStar from '../components/RenderStar';
+import ProductReview from '../components/ProductReview';
 export default function MyReview({navigation}) {
     const {user} = useUserAuth();
     const [review,setReview] = useState([])
@@ -24,28 +25,12 @@ export default function MyReview({navigation}) {
         
         return ( 
           
-
-           
-        <View style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
-        <Image
-          source={{ uri: item.image }}
-          style={{ width: 100, height: 150, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }
-        />
-        <View className='flex justify-between'>
-            <View>
-            <Text className="text-[#CE4257] w-[250] font-semibold" numberOfLines={1} >{item.book_name}</Text>
-            <View className='flex flex-row p-1'><RenderStar Rate={item.Rate} Size={15}/></View>
-            <Text>{item.Comment}</Text>
-            </View>
+            <>
+           <ProductReview id={item.id} Comment={item.Comment} Date={item.Date} image={item.image} Rate={item.Rate} book_name={item.book_name}/>
             
-            <View className='flex items-end p-1'>
-                <Text>{item.Date}</Text>
-            </View>
-          
-          
-          
-        </View>
-      </View>
+            
+            
+            </>
      )
     }
     useEffect(()=>{

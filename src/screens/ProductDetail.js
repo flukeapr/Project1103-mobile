@@ -84,7 +84,7 @@ export default function ProductDetail({navigation,route}) {
      
       
       return (
-        <View className='flex flex-row mt-4 w-full '>
+        <View className='flex flex-row mt-4 w-full ' key={item.id}>
       <View className='flex flex-row w-[200]  items-center'>
         <Image source={require('../../assets/ProflieThumbnail_reivew.png')} />
         <View className='ml-2 mb-4 w-[200]'>
@@ -190,7 +190,7 @@ export default function ProductDetail({navigation,route}) {
                    height: 60,
    
                  }}
-                 title={`${product.price}.00 บาท`}
+                 title={`${product.price ? product.price : 0}.00 บาท`}
                  titleStyle={{ color: '#CE4257',fontWeight:'bold' }}></Button>
        
          <Button onPress={addToCart} buttonStyle={{

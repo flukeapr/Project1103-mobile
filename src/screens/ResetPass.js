@@ -1,4 +1,4 @@
-import { View, Text,Image, TouchableOpacity } from 'react-native'
+import { View, Text,Image, TouchableOpacity, StatusBar } from 'react-native'
 import {useState} from 'react';
 import Logo from '../../assets/Logo.png';
 import { Button,Icon,Input } from '@rneui/themed';
@@ -47,8 +47,9 @@ export default function ResetPass({navigation}) {
 
   return (
     <>
-    <View className="flex-1 items-center justify-center bg-white">
-       <Image source={Logo} alt='Logo.png'></Image>
+    <View className="flex-1 items-center justify-between bg-white" style={{paddingTop:StatusBar.currentHeight}}>
+      <View className='w-full items-center justify-center bg-white'>
+      <Image source={Logo} alt='Logo.png'></Image>
        <Text className='m-8 text-[#CE4257] 'style={{fontFamily:'Bebas',fontSize:24}}>Reset Password</Text>
        <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
         
@@ -76,14 +77,17 @@ export default function ResetPass({navigation}) {
            <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Back to <Text className="text-[#CE4257]" >LogIn</Text> </Text>
 
            </TouchableOpacity>
+      </View>
+      <View>
+      <Image source={LayerBottom} style={{}}></Image>
+      </View>
+       
 
             
 
-       
+          
     </View>
-    <View className="flex-3 bg-white pt-2">
-    <Image source={LayerBottom}></Image>
-</View>
+   
     
     </>
     

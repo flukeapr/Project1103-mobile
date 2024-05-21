@@ -1,4 +1,4 @@
-import { View, Text, StatusBar } from 'react-native';
+import { View, Text, StatusBar,ActivityIndicator } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { useUserAuth } from '../context/UserAuthenContext';
@@ -11,7 +11,7 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const { user } = useUserAuth();
   const uid = "U8R4oO9mGINMrY2yxoyscxerwhg2";
-
+const [isLoading ,setIsLoading] = useState(true);
   useEffect(() => {
       if (!user) {
           return; 
@@ -31,6 +31,7 @@ export default function Chat() {
               };
           });
           setMessages(allMsg);
+          setIsLoading(false);
       });
 
       return () => unSubscribe();
@@ -47,6 +48,7 @@ export default function Chat() {
           sendBy: user.uid,
           sentTo: uid,
           createdAt: serverTimestamp(),
+          
       };
 
       setMessages(previousMessages => GiftedChat.append(previousMessages, myMsg));
@@ -72,36 +74,47 @@ export default function Chat() {
               <Icon name="chatbubble-ellipses" type='ionicon' color={"#fff"} size={25} />
           </View>
         <GestureHandlerRootView style={{ flex: 1,  justifyContent: 'space-between',backgroundColor:'white' }} >
-         
-          <GiftedChat
-              messages={messages}
-              onSend={messages => onSend(messages)}
-              user={{
-                  _id: user.uid,
-              }}
-              renderBubble={props => (
-                  <Bubble {...props} wrapperStyle={{
-                      right: { backgroundColor: '#CE4257',borderColor:'black',borderWidth:1 },
-                      left: { backgroundColor: 'white',borderColor:'black',borderWidth:1 },
-                  }} />
-              )}
-              textInputProps={
-                {
-                 
-                  placeholderTextColor: 'black',
-                  style: {
-                    backgroundColor: 'white',
-                    borderRadius: 20,
-                    width: '100%',
-                    paddingLeft:3,
-                    borderColor:'black',
-                    marginVertical: 10,
+         {isLoading ? (
+          <View className='flex items-center justify-center h-[700]'>
+           <ActivityIndicator size="large" color="#CE4257" />
+          </View>
+         ) : (
+           
+                <GiftedChat
+            messages={messages}
+           onSend={text =>onSend(text)}
+            user={{
+                _id: user.uid,
+                avatar: user.photoURL,
+                name: user.displayName,
+            }}
+            renderBubble={props => (
+                <Bubble {...props} wrapperStyle={{
+                    right: { backgroundColor: '#CE4257',borderColor:'black',borderWidth:1 },
+                    left: { backgroundColor: 'white',borderColor:'black',borderWidth:1 },
+                }} />
+            )}
+          //   textInputProps={
+          //     {
+               
+          //       placeholderTextColor: 'black',
+          //       style: {
+          //         backgroundColor: 'white',
+          //         borderRadius: 20,
+          //         width: '100%',
+          //         paddingLeft:3,
+          //         borderColor:'black',
+          //         marginVertical: 10,
 
-                  }
-                }
-              }
-              
-          />
+          //       }
+          //     }
+          //   }
+            
+        />
+           
+            
+         )}
+        
         
       </GestureHandlerRootView>
     </>

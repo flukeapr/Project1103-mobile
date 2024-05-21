@@ -29,9 +29,12 @@ const {isPortrait} = useAccelerometer();
 
 
     ):(
-      <View className="flex-3  items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
-      <Image source={require('../../assets/TopLayout.png')} ></Image>
-        <TextInput placeholder="Search" className='bg-white w-72 h-12 px-2 rounded-md ml-4' value={searchText} onChangeText={handleSearch} ></TextInput>
+      <View className="flex-3  items-center  bg-[#CE4257] " style={{flexDirection:'row',height:120,paddingTop:StatusBar.currentHeight}}>
+        <View style={{flexDirection:'row', alignItems:'center',margin:5}}>
+      <Image source={require('../../assets/TopLayout.png')} style={{marginLeft:5}}></Image>
+        <TextInput style={{width:700}} placeholder="Search" className='bg-white h-12 px-2 rounded-md ml-4' value={searchText} onChangeText={handleSearch} ></TextInput>
+
+        </View>
        
      
     </View>
