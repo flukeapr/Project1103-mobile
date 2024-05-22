@@ -3,7 +3,7 @@ import React,{useState} from 'react';
 import { CheckBox, Icon } from '@rneui/themed';
 import { Button } from '@rneui/base';
 import moment from 'moment';
-import { addDoc, collection, doc, increment, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, increment, setDoc, updateDoc } from 'firebase/firestore';
 import { useUserAuth } from '../context/UserAuthenContext';
 import Toast from 'react-native-toast-message';
 import { db } from '../config/Firebase';
@@ -46,20 +46,25 @@ const getFormattedDate = () => {
         }
        
         try {
-            const docRef = collection(db, "Book",product.book_id,"Review")
-            await addDoc(docRef,{
-                Rate: rating,
-                Date: dateStr,
-                User: user.email,
-                Comment: review
-            })
-            const myReviewRef = collection(db, "Users",user.uid,"myReview")
-                await addDoc(myReviewRef,{
+           if(!product.id){
+            return;
+           }
+            const myReviewRef = doc(db, "Users",user.uid)
+           const reviewDocRef = doc(myReviewRef,"myReview",product.id)
+             await setDoc(reviewDocRef,{
+                    book_id:product.book_id,
                     book_name:product.book_name,
                     Rate: rating,
                     Comment: review,
                     Date: dateStr,
                     image: product.image
+                })
+                const docRef = doc(db, "Book",product.book_id,"Review",product.id)
+                await setDoc(docRef,{
+                    Rate: rating,
+                    Date: dateStr,
+                    User: user.email,
+                    Comment: review
                 })
             const UpdateBookRef = doc(db,"Book",product.book_id)
             await updateDoc(UpdateBookRef,{
@@ -74,7 +79,7 @@ const getFormattedDate = () => {
                     text1: 'บันทึกข้อมูลสำเร็จ',
                     text2: 'ขอบคูณสำหรับการรีวิวหนังสือ'
                 })
-                navigation.navigate('orderdetails')
+                navigation.navigate('MyOrders')
             }catch(error){
                 console.error(error);
                 Toast.show({
@@ -112,7 +117,7 @@ const renderStars = () => {
         <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'
-            onPress={() => navigation.navigate("OrderDetails")}>
+            onPress={() => navigation.navigate("MyOrders")}>
             <Image source={require('../../assets/prev.png')}></Image>
             <Text className='text-[#fff] text-lg ml-8'>รีวิวหนังสือ</Text>
             </TouchableOpacity>

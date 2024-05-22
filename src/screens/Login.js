@@ -204,5 +204,6 @@ const styles = StyleSheet.create({
     fontFamily:'Bebas',
     color:'#CE4257',
     margin:20
+
   }
 });

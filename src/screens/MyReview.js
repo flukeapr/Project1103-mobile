@@ -26,7 +26,14 @@ export default function MyReview({navigation}) {
         return ( 
           
             <>
-           <ProductReview id={item.id} Comment={item.Comment} Date={item.Date} image={item.image} Rate={item.Rate} book_name={item.book_name}/>
+           <ProductReview id={item.id} 
+           Comment={item.Comment} 
+           Date={item.Date} 
+           image={item.image}
+            Rate={item.Rate} 
+            book_id={item.book_id}
+            book_name={item.book_name}
+            getReview={getMyReview}/>
             
             
             
@@ -35,7 +42,11 @@ export default function MyReview({navigation}) {
     }
     useEffect(()=>{
         const unsubscribe = navigation.addListener('focus',()=>{
-            getMyReview().then(()=>setLoading(false))
+            getMyReview().then(()=>{
+               
+                setLoading(false)
+            })
+            
         })
         return unsubscribe;
     },[navigation])
@@ -64,6 +75,7 @@ export default function MyReview({navigation}) {
             data={review}
             renderItem={renderItem}
             keyExtractor={(item)=> item.id}
+            
             /> 
                 ):(
                     <View className='flex items-center justify-center h-[700]'>

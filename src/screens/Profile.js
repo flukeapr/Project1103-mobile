@@ -38,7 +38,7 @@ const {isPortrait} = useAccelerometer();
       <View className='flex   w-full items-center justify-center my-10' style={{flexDirection:`${isPortrait ? 'column' : 'row'}`}}>
         <View className='flex flex-row '>
        <ButtonPageProfile name={"แก้ไขโปรไฟล์"} icon={"create"} page={"EditProfile"}/>
-       <ButtonPageProfile name={"ประวัติการสั่งซื้อ"} icon={"list"} page={"OrderDetails"}/>
+       <ButtonPageProfile name={"ประวัติการสั่งซื้อ"} icon={"list"} page={"MyOrders"}/>
         </View>
         <View className='flex flex-row'>
         <ButtonPageProfile name={"รีวิวของฉัน"} icon={"document-text"} page={"myReview"}/>     

@@ -13,6 +13,7 @@ export default function RenderStar(props) {
                 type='ionicon'
                 size={props.Size}
                 color={i <= props.Rate ? '#FFC107' : '#000'}
+                key={i}
               />
            
           );

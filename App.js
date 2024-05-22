@@ -12,12 +12,12 @@ import Main from './navigation/Main';
 import ProductDetail from './src/screens/ProductDetail';
 import EditProfile from './src/screens/EditProfile';
 import ResetPass from './src/screens/ResetPass';
-import OrderDetails from './src/screens/OrderDetails';
 import ReviewBook from './src/screens/ReviewBook';
 import MyReview from './src/screens/MyReview';
 import TestPage from './src/screens/TestPage';
 import { useState,useEffect } from 'react';
 import { AccelerometerProvider } from './src/context/UseAccelerometerContext';
+import MyOrder from './src/screens/MyOrder';
 
 
 // font Header (Bebas Neue) + Body (Roboto)
@@ -83,9 +83,9 @@ export default function App() {
    <AccelerometerProvider>
 
   
-    <NavigationContainer>
+    <NavigationContainer >
       <UserAuthContextProvider>
-      <Stack.Navigator >
+      <Stack.Navigator initialRouteName='login'>
       <Stack.Screen name="login" component={Login} options={{headerShown: false}} />
       <Stack.Screen name="register" component={Register} options={{headerShown: false}} />
       <Stack.Screen name="home" component={Homepage} options={{headerShown: false}} />
@@ -93,10 +93,9 @@ export default function App() {
       <Stack.Screen name="productDetail" component={ProductDetail} options={{headerShown: false}} />
       <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
       <Stack.Screen name="resetpass" component={ResetPass} options={{headerShown: false}} />
-      <Stack.Screen name="OrderDetails" component={OrderDetails} options={{headerShown: false}} />
       <Stack.Screen name="reviewBook" component={ReviewBook} options={{headerShown: false}} />
       <Stack.Screen name='myReview' component={MyReview} options={{headerShown:false}}/>
-      <Stack.Screen name='TestPage' component={TestPage} />
+      <Stack.Screen name='MyOrders' component={MyOrder} options={{headerShown:false}}/>
     </Stack.Navigator>
     <Toast config={toastConfig} />
    
