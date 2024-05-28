@@ -10,7 +10,13 @@ import { useUserAuth } from '../context/UserAuthenContext';
 import { Dimensions } from 'react-native';
 import { useAccelerometer } from '../context/UseAccelerometerContext';
 import { useFonts } from 'expo-font';
-import LogoLandscape from '../../assets/Logo-landscape.png'
+import LogoLandscape from '../../assets/Logo-landscape.png';
+import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
+
+
+
+
+
 export default function Login({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -68,21 +74,30 @@ const handleLogin = async ()=>{
       <>
       
 
-     
+     {/* fullScreen */}
       <View className="flex-1 items-center justify-between bg-white" style={{paddingTop:StatusBar.currentHeight+10}}>
-      
+      {/* subScreen with out image bottom  */}
       <View className=' w-full items-center justify-center'>
-      <Image source={Logo} alt='Logo.png'></Image>
+        {/* Logo */}
+      <Animated.Image entering={FadeInUp.delay(100).duration(1000).springify()} source={Logo} alt='Logo.png'></Animated.Image>
 
-  
-  <Text style={styles.storeName}>ReadMe Store</Text>
+      {/* Title Store Name */}
+  <Animated.Text entering={FadeIn.duration(1000)} style={styles.storeName}>ReadMe Store</Animated.Text>
+
+ {/* Input filed */}
+  <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className='w-full flex items-center'>
   <Input containerStyle={{width: "70%"}} placeholder="Email"  inputStyle={{fontFamily:'Roboto'}}   leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
+  </Animated.View>
+  <Animated.View entering={FadeInDown.delay(400).duration(1000).springify()} className='w-full flex items-center'>
   <Input containerStyle={{width: "70%"}} placeholder="Password" inputStyle={{fontFamily:'Roboto'}} secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
+
+  </Animated.View>
   
+  {/* Reset pass Text */}
+  <Animated.Text entering={FadeIn.delay(600).duration(1000)} className="text-sm font-semibold ml-36 my-2" style={{color:"#CE4257",fontFamily:'Roboto'}} onPress={() => navigation.navigate('resetpass')}>Reset Password</Animated.Text>
   
-  <Text className="text-sm font-semibold ml-36 my-2" style={{color:"#CE4257",fontFamily:'Roboto'}} onPress={() => navigation.navigate('resetpass')}>Reset Password</Text>
-  
-  
+  {/* Button Login */}
+  <Animated.View entering={FadeInDown.delay(600).duration(1000)}>
   <Button
             title="LOGIN"
             buttonStyle={{
@@ -102,11 +117,12 @@ const handleLogin = async ()=>{
             size='lg'
             onPress={handleLogin}
           />
-         
-           
-          <Text className="text-sm font-medium  "style={{fontFamily:'Roboto'}} >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('register')}>Create Account</Text> </Text>
+    </Animated.View>
+           {/* Signup Text */}
+          <Animated.Text entering={FadeInDown.delay(800).duration(1000)} className="text-sm font-medium  "style={{fontFamily:'Roboto'}} >Not Register? <Text className="text-[#CE4257]" onPress={() => navigation.push('register')}>Create Account</Text> </Animated.Text>
         
       </View>
+      {/* View Image  */}
        <View >
        <Image source={LayerBottom} ></Image>
       </View> 
@@ -115,7 +131,9 @@ const handleLogin = async ()=>{
      
       </>
     ): (
+      
       <>
+      {/* Landscape View in children same on top  */}
        <View className="flex flex-row items-center" style={styles.landscape}>
         <View style={styles.container}>
         <Image source={LogoLandscape} alt='Logo.png'></Image>
@@ -203,7 +221,7 @@ const styles = StyleSheet.create({
     fontSize:24,
     fontFamily:'Bebas',
     color:'#CE4257',
-    margin:20
+    margin:15
 
   }
 });

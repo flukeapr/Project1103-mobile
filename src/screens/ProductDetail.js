@@ -15,8 +15,7 @@ export default function ProductDetail({navigation,route}) {
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
     const {user} = useUserAuth();
-    const [isplay,setIsplay] = useState(false);
-  const {isPortrait} = useAccelerometer();
+   
 
     const addToCart = async ()=>{
       try {
@@ -106,12 +105,14 @@ export default function ProductDetail({navigation,route}) {
       );
     };
 
-   
-      if(isplay){
-        Speech.speak(product.story);
-      }else{
-        Speech.stop();
+    const speckStory = async () => {
+      const isSpeaking = await Speech.isSpeakingAsync();
+      if (!isSpeaking) {
+          Speech.speak(product.story);
+      } else {
+          Speech.stop();
       }
+  }
       
     
   return (
@@ -119,7 +120,7 @@ export default function ProductDetail({navigation,route}) {
      
            <View className='flex-1 justify-between bg-white'>
            <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
-               <TouchableOpacity onPress={() => navigation.navigate("main")}>
+               <TouchableOpacity onPress={() => navigation.goBack()}>
                <Image source={require('../../assets/prev.png')}></Image>
               
                </TouchableOpacity>
@@ -157,7 +158,7 @@ export default function ProductDetail({navigation,route}) {
            <Text className='pt-4' style={{fontSize:16}}>เนื้อเรื่องโดยย่อ</Text>
            <Text className='w-[300]' style={{fontSize:16}}>{product.story}</Text>
            <View className='flex flex-row items-center justify-center m-2'>
-             <Button title={"กดเพื่อฟังเนื้อเรื่อง"} titleStyle={{fontSize:18,fontWeight:'bold'}} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#ff9d8a' }} onPress={()=>setIsplay(!isplay)}/>
+             <Button title={"กดเพื่อฟังเนื้อเรื่อง"} titleStyle={{fontSize:18,fontWeight:'bold'}} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#ff9d8a' }} onPress={speckStory}/>
            </View>
              <View className=''>
              <Text className='text-lg text-[#CE4257] font-semibold mt-6'>รีวิวหนังสือ</Text>

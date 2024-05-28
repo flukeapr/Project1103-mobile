@@ -9,6 +9,7 @@ import { db } from '../config/Firebase';
 import Toast from 'react-native-toast-message';
 import ActionSheet from 'react-native-actions-sheet';
 import { useAccelerometer } from '../context/UseAccelerometerContext';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 export default function Cart({navigation}) {
   const [products ,setProducts] = useState([]);
@@ -49,8 +50,8 @@ const actionSheetRef = useRef(null);
       });
     });
     return unsubscribe;
-
-  },[navigation]);
+  }, [navigation, products]);
+  
 
   const removeFromCart = async (id) => {
     try {
@@ -170,7 +171,7 @@ const actionSheetRef = useRef(null);
   const renderItem = ({ item }) => {
     return (
      
-        <View style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
+        <Animated.View entering={FadeInDown.delay(200).duration(100).springify()} style={{ flexDirection: "row", padding: 10 }} key={item.id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
         <Image
           source={{ uri: item.image }}
           style={{ width: 100, height: 150, marginRight: 10 ,borderColor:'#CE4257',borderWidth:1,borderRadius:10} }
@@ -196,7 +197,7 @@ const actionSheetRef = useRef(null);
             </View>
           </View>
         </View>
-      </View>
+      </Animated.View>
       
      
         

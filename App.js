@@ -71,6 +71,26 @@ const toastConfig = {
       }}
     />
   ),
+  info: (props) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: 'blue',
+      borderLeftWidth:7,
+      width:'90%',
+      height:75,
+      borderRightColor:'white',
+      borderRightWidth:7
+    }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 17,
+        fontWeight: '700'
+      }}
+      text2Style={{
+        fontSize: 14
+      }}
+    />
+  ),
  
 };
 
@@ -85,7 +105,7 @@ export default function App() {
   
     <NavigationContainer >
       <UserAuthContextProvider>
-      <Stack.Navigator initialRouteName='login'>
+      <Stack.Navigator initialRouteName='login' >
       <Stack.Screen name="login" component={Login} options={{headerShown: false}} />
       <Stack.Screen name="register" component={Register} options={{headerShown: false}} />
       <Stack.Screen name="home" component={Homepage} options={{headerShown: false}} />

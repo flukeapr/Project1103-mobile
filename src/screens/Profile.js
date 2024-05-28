@@ -7,6 +7,7 @@ import { db } from '../config/Firebase';
 import ButtonPageProfile from '../components/ButtonPageProfile';
 import { Skeleton } from '@rneui/base';
 import { useAccelerometer } from '../context/UseAccelerometerContext';
+import Animated, { FadeInLeft, FadeInRight } from 'react-native-reanimated';
 
 export default function Profile({ navigation }) {
   const {user,logOut} = useUserAuth();
@@ -36,11 +37,11 @@ const {isPortrait} = useAccelerometer();
                </View>
 
       <View className='flex   w-full items-center justify-center my-10' style={{flexDirection:`${isPortrait ? 'column' : 'row'}`}}>
-        <View className='flex flex-row '>
+        <Animated.View entering={FadeInLeft.delay(100).duration(1000).springify()} className='flex flex-row '>
        <ButtonPageProfile name={"แก้ไขโปรไฟล์"} icon={"create"} page={"EditProfile"}/>
        <ButtonPageProfile name={"ประวัติการสั่งซื้อ"} icon={"list"} page={"MyOrders"}/>
-        </View>
-        <View className='flex flex-row'>
+        </Animated.View >
+        <Animated.View entering={FadeInRight.delay(100).duration(1000).springify()} className='flex flex-row'>
         <ButtonPageProfile name={"รีวิวของฉัน"} icon={"document-text"} page={"myReview"}/>     
         <TouchableOpacity className='m-8 text-center items-center pl-4'  onPress={handleLogout}>
           <View className='rounded-full w-20 h-20 bg-[#CE4257] justify-center' >
@@ -48,7 +49,7 @@ const {isPortrait} = useAccelerometer();
           </View>
           <Text className='text-[#CE4257] text-sm font-bold p-2'>ออกจากระบบ</Text>
         </TouchableOpacity>
-        </View>
+        </Animated.View>
       
         
       </View>

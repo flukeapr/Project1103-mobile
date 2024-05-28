@@ -12,6 +12,8 @@ import { db,storage } from '../config/Firebase';
 import { useUserAuth } from '../context/UserAuthenContext';
 import { useFonts } from 'expo-font';
 import Toast from 'react-native-toast-message';
+import Animated, { FadeIn, FadeInDown, FadeInUp } from 'react-native-reanimated';
+
 export default function Register({navigation}) {
   const [fullName, setFullName] = useState('')
   const [address, setAddress] = useState('')
@@ -104,20 +106,31 @@ export default function Register({navigation}) {
      
      <View className=' flex flex-row w-full ' >
       <View className='flex flex-col  w-full items-center justify-center'>
-        <View className='flex flex-row items-center m-4'>
+        <Animated.View entering={FadeInUp.delay(100).duration(1000).springify()} className='flex flex-row items-center m-4'>
         <Image source={Logo} ></Image>
         <Text style={styles.storeName}>Register Account</Text>
-        </View>
-       
+        </Animated.View>
+       <Animated.View entering={FadeInDown.delay(100).duration(1000)} className='w-full items-center'>
       <Input containerStyle={{width: "65%"}} placeholder="FullName"    leftIcon={{ type: 'ionicon', name: 'person-circle', color: '#CE4257'  }} value={fullName} onChange={(e) => setFullName(e.nativeEvent.text)} />
-      {/* <Input containerStyle={{width: "65%"}} placeholder="Address"    leftIcon={{ type: 'ionicon', name: 'home', color: '#CE4257'  }} value={address} onChange={(e) => setAddress(e.nativeEvent.text)}/>
-      <Input containerStyle={{width: "65%"}} placeholder="Phone"    leftIcon={{ type: 'ionicon', name: 'call', color: '#CE4257'  }} value={phone} onChange={(e) => setPhone(e.nativeEvent.text)}/>
-     */}
-<Input containerStyle={{width: "65%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
-      <Input containerStyle={{width: "65%"}} placeholder="Password" secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
-      <Input containerStyle={{width: "65%"}} placeholder="Profile"    leftIcon={{ type: 'ionicon', name: 'image', color: '#CE4257'  }} onPressIn={pickImage} value={image} onChange={(e) => setImage(e.nativeEvent.text)}/>
-      {image && <Image source={{ uri: image }} style={styles.image} />}
 
+       </Animated.View>
+       <Animated.View entering={FadeInDown.delay(200).duration(1000)} className='w-full items-center'>
+<Input containerStyle={{width: "65%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
+
+       </Animated.View>
+       <Animated.View entering={FadeInDown.delay(400).duration(1000)} className='w-full items-center'>
+      <Input containerStyle={{width: "65%"}} placeholder="Password" secureTextEntry={true}   leftIcon={{ type: 'ionicon', name: 'key', color: '#CE4257'  }} value={password} onChange={(e) => setPassword(e.nativeEvent.text)}/>
+
+       </Animated.View>
+       <Animated.View entering={FadeInDown.delay(600).duration(1000)} className='w-full items-center'>
+      <Input containerStyle={{width: "65%"}} placeholder="Profile"    leftIcon={{ type: 'ionicon', name: 'image', color: '#CE4257'  }} onPressIn={pickImage} value={image} onChange={(e) => setImage(e.nativeEvent.text)}/>
+
+       </Animated.View>
+      {image && <Animated.Image entering={FadeIn.delay(100).duration(1000)} source={{ uri: image }} style={styles.image} />}
+
+      <Animated.View entering={FadeInDown.delay(800).duration(1000)}>
+
+     
       <Button
               title="SIGNUP"
               buttonStyle={{
@@ -135,20 +148,12 @@ export default function Register({navigation}) {
              onPress={handleSubmit
             }
             />
-
+      </Animated.View>
       </View>
+     </View>
 
-     
-      
-       
+     <Animated.Text  entering={FadeIn.delay(1000).duration(1000)} className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Already have account ? <Text className="text-[#CE4257]" onPress={() => navigation.goBack()}>LogIn</Text> </Animated.Text>
      </View>
-     <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Already have account ? <Text className="text-[#CE4257]" onPress={() => navigation.navigate('login')}>LogIn</Text> </Text>
-     </View>
-      
-      
-     
-      
-     
       <View>
       <Image source={LayerBottom}  style={{marginTop:125}}></Image>
       </View>

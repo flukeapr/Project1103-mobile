@@ -38,8 +38,19 @@ const [selectedMessage, setSelectedMessage] = useState([]);
           });
           setMessages(allMsg);
           setIsLoading(false);
+          if (querySnap.docChanges().length > 0) {
+            const lastMessage = querySnap.docChanges()[0].doc.data();
+            if (lastMessage.sendBy !== user.uid) {
+              Toast.show({
+                type: 'info',
+                text1: 'New Message',
+                text2: lastMessage.text || 'You have a new message',
+              });
+            }
+          }
+    
       });
-
+      
       return () => unSubscribe();
   }, [user, uid]);
 
@@ -84,8 +95,6 @@ const [selectedMessage, setSelectedMessage] = useState([]);
         const chatDocRef = doc(db, "Chats", docId);
         const messageDocRef = doc(chatDocRef, "messages", selectedMessage.id);
         await deleteDoc(messageDocRef);
-
-        // setMessages(previousMessages => previousMessages.filter(message => message._id !== selectedMessage._id));
 
         Toast.show({
             type: 'success',

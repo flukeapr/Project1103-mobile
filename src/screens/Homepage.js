@@ -8,6 +8,7 @@ import { doc, getDocs, collection ,query, where } from "firebase/firestore";
 import ProductCard from "../components/ProductCard";
 import { useAccelerometer } from "../context/UseAccelerometerContext";
 import { useFonts } from "expo-font";
+import Animated, { FadeInLeft, FadeInRight } from "react-native-reanimated";
 
 export default function Homepage({ navigation }) {
   const [products, setProducts] = useState([]);
@@ -72,6 +73,7 @@ const {isPortrait} = useAccelerometer();
       ) : (
         
         <FlatList
+        
           data={products.filter((prod) => {
             if (searchText === "") {
               return prod;

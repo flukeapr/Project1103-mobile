@@ -6,7 +6,7 @@ import LayerBottom from '../../assets/layerBottom.png';
 import { useFonts } from 'expo-font';
 import { useUserAuth } from '../context/UserAuthenContext';
 import Toast from 'react-native-toast-message';
-
+import Animated,{FadeIn,FadeInDown,FadeInUp} from 'react-native-reanimated';
 export default function ResetPass({navigation}) {
     const [email, setEmail] = useState('');
     const [fontsLoaded, fontError] = useFonts({
@@ -49,11 +49,16 @@ export default function ResetPass({navigation}) {
     <>
     <View className="flex-1 items-center justify-between bg-white" style={{paddingTop:StatusBar.currentHeight}}>
       <View className='w-full items-center justify-center bg-white'>
-      <Image source={Logo} alt='Logo.png'></Image>
-       <Text className='m-8 text-[#CE4257] 'style={{fontFamily:'Bebas',fontSize:24}}>Reset Password</Text>
-       <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
-        
+      <Animated.Image entering={FadeInUp.delay(100).duration(1000).springify()} source={Logo} alt='Logo.png'></Animated.Image>
 
+   
+       <Animated.Text entering={FadeIn.duration(1000)} className='m-8 text-[#CE4257] 'style={{fontFamily:'Bebas',fontSize:24}}>Reset Password</Animated.Text>
+       <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className='flex items-center w-full'>
+       <Input containerStyle={{width: "70%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
+
+       </Animated.View>
+        
+       <Animated.View entering={FadeInDown.delay(400).duration(1000)}>
         <Button
               title="Send Email"
               buttonStyle={{
@@ -72,11 +77,16 @@ export default function ResetPass({navigation}) {
               size='lg'
              onPress={handleResetPass}
             />
-           <TouchableOpacity className='flex flex-row items-center' onPress={() => navigation.navigate('login')}>
+            </Animated.View>
+            <Animated.View entering={FadeInDown.delay(600).duration(1000)}>
+
+           
+           <TouchableOpacity className='flex flex-row items-center' onPress={() => navigation.goBack()}>
            <Icon name='chevron-back' type='ionicon'></Icon>
            <Text className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Back to <Text className="text-[#CE4257]" >LogIn</Text> </Text>
 
            </TouchableOpacity>
+           </Animated.View>
       </View>
       <View>
       <Image source={LayerBottom} style={{}}></Image>
