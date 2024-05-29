@@ -18,7 +18,9 @@ import TestPage from './src/screens/TestPage';
 import { useState,useEffect } from 'react';
 import { AccelerometerProvider } from './src/context/UseAccelerometerContext';
 import MyOrder from './src/screens/MyOrder';
-
+import { StripeProvider } from '@stripe/stripe-react-native';
+import { Provider } from 'react-redux';
+import store from './src/store/store';
 
 // font Header (Bebas Neue) + Body (Roboto)
 // Alert config กำหนดค่าต่างๆของตัว Alert
@@ -96,33 +98,33 @@ const toastConfig = {
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-  
+  const STRIPE_KEY ='pk_test_51PGKc0EsI8llu3oDeskAqIH7UsdaJ5RUliyq9fv7w292YDksrB1m2gK477DtJ5w12MtIG18KE3mRFkfSEfbfSD1K00jB7CeSFX';
   return (
+    
    
+    <AccelerometerProvider>
+      <StripeProvider publishableKey={STRIPE_KEY}>
+        <NavigationContainer>
+          <UserAuthContextProvider>
+            <Stack.Navigator initialRouteName='login'>
+              <Stack.Screen name="login" component={Login} options={{ headerShown: false }} />
+              <Stack.Screen name="register" component={Register} options={{ headerShown: false }} />
+              <Stack.Screen name="home" component={Homepage} options={{ headerShown: false }} />
+              <Stack.Screen name="main" component={Main} options={{ headerShown: false }} />
+              <Stack.Screen name="productDetail" component={ProductDetail} options={{ headerShown: false }} />
+              <Stack.Screen name="EditProfile" component={EditProfile} options={{ headerShown: false }} />
+              <Stack.Screen name="resetpass" component={ResetPass} options={{ headerShown: false }} />
+              <Stack.Screen name="reviewBook" component={ReviewBook} options={{ headerShown: false }} />
+              <Stack.Screen name='myReview' component={MyReview} options={{ headerShown: false }} />
+              <Stack.Screen name='MyOrders' component={MyOrder} options={{ headerShown: false }} />
+            </Stack.Navigator>
+            <Toast config={toastConfig} />
+          </UserAuthContextProvider>
+          <StatusBar style='auto' />
+        </NavigationContainer>
+      </StripeProvider>
+    </AccelerometerProvider>
 
-   <AccelerometerProvider>
-
-  
-    <NavigationContainer >
-      <UserAuthContextProvider>
-      <Stack.Navigator initialRouteName='login' >
-      <Stack.Screen name="login" component={Login} options={{headerShown: false}} />
-      <Stack.Screen name="register" component={Register} options={{headerShown: false}} />
-      <Stack.Screen name="home" component={Homepage} options={{headerShown: false}} />
-      <Stack.Screen name="main" component={Main} options={{headerShown: false}} />
-      <Stack.Screen name="productDetail" component={ProductDetail} options={{headerShown: false}} />
-      <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}} />
-      <Stack.Screen name="resetpass" component={ResetPass} options={{headerShown: false}} />
-      <Stack.Screen name="reviewBook" component={ReviewBook} options={{headerShown: false}} />
-      <Stack.Screen name='myReview' component={MyReview} options={{headerShown:false}}/>
-      <Stack.Screen name='MyOrders' component={MyOrder} options={{headerShown:false}}/>
-    </Stack.Navigator>
-    <Toast config={toastConfig} />
-   
-      </UserAuthContextProvider>
-    <StatusBar style='auto'/>
-  </NavigationContainer>
-  </AccelerometerProvider>
   );
 }
 

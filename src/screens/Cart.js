@@ -1,4 +1,4 @@
-import { View, Text, PermissionsAndroid,Image,ActivityIndicator,FlatList, ScrollView ,RefreshControl, TouchableOpacity} from 'react-native';
+import { View, Text, PermissionsAndroid,Image,ActivityIndicator,FlatList, ScrollView ,RefreshControl, TouchableOpacity,Alert} from 'react-native';
 import React, { useState,useEffect,useCallback, useRef } from 'react';
 import { Button,Icon } from '@rneui/base';
 import Voice from 'react-native-voice';
@@ -10,17 +10,90 @@ import Toast from 'react-native-toast-message';
 import ActionSheet from 'react-native-actions-sheet';
 import { useAccelerometer } from '../context/UseAccelerometerContext';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-
+import { useStripe } from '@stripe/stripe-react-native';
 export default function Cart({navigation}) {
   const [products ,setProducts] = useState([]);
   const {user} = useUserAuth();
+  const [loadingCart , setLoadingCart] = useState(true);
   const [loading , setLoading] = useState(true);
 const actionSheetRef = useRef(null);
   const [total , setTotal] = useState(0);
  const {isPortrait} = useAccelerometer();
-  
 
+const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+const API_URL = "http://10.0.2.2:3000/api";
+
+const fetchPaymentSheetParams = async () => {
+  const response = await fetch(`${API_URL}/PaymentStripe`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify({cost:Math.floor(total * 100)})
+  });
+  const { paymentIntent, ephemeralKey, customer} = await response.json();
+
+  return {
+    paymentIntent,
+    ephemeralKey,
+    customer,
+  };
+};
+
+const initializePaymentSheet = async () => {
   
+  const {
+    paymentIntent,
+    ephemeralKey,
+    customer,
+  } = await fetchPaymentSheetParams();
+
+  const { error } = await initPaymentSheet({
+    merchantDisplayName: "ReadMe-Store",
+    customerId: customer,
+    customerEphemeralKeySecret: ephemeralKey,
+    paymentIntentClientSecret: paymentIntent,
+    // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+    //methods that complete payment after a delay, like SEPA Debit and Sofort.
+    allowsDelayedPaymentMethods: true,
+    defaultBillingDetails: {
+      name: 'Jane Doe',
+    }
+  });
+  if (!error) {
+    setLoading(true);
+    openPaymentSheet();
+  }else{
+    console.log(error)
+  }
+};
+
+const openPaymentSheet = async () => {
+  const { error } = await presentPaymentSheet();
+
+    if (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Payment Failed',
+        text2: `Error code: ${error.code}`,
+      })
+      // Alert.alert(`Error code: ${error.code}`, error.message);
+    } else {
+      Toast.show({
+        type: 'success',
+        text1: 'Payment Success',
+        text2: 'Your order is confirmed!',
+
+      })
+      orderItem();
+    }
+};
+
+useEffect(() => {
+  initializePaymentSheet();
+}, []);
+
   
   const getCart = async () => {
     try {
@@ -46,7 +119,7 @@ const actionSheetRef = useRef(null);
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getCart().then(() => {
-        setLoading(false);
+        setLoadingCart(false);
       });
     });
     return unsubscribe;
@@ -103,6 +176,7 @@ const actionSheetRef = useRef(null);
       console.error("Error getting documents: ", error);
     }
   }
+
   
   const orderItem = async ()=>{
     try {
@@ -232,7 +306,7 @@ const actionSheetRef = useRef(null);
     <Tobtabs/>
     <View className="flex-1 justify-between items-center bg-white">
       <View>
-        {loading ? (
+        {loadingCart ? (
           <View className='flex items-center justify-center h-[700]'>
            <ActivityIndicator size="large" color="#CE4257" />
           </View>
@@ -269,7 +343,7 @@ const actionSheetRef = useRef(null);
               title={`ราคารวม ${total}.00 บาท`}
               titleStyle={{ color: '#CE4257',fontWeight:'bold' }}></Button>
     
-      <Button onPress={()=>actionSheetRef.current?.show()}  buttonStyle={{
+      <Button onPress={initializePaymentSheet}  buttonStyle={{
                 backgroundColor: '#720026',
                 width:isPortrait ? 210 : 400,
                 height: isPortrait ? 60 : 40,
@@ -307,7 +381,7 @@ const actionSheetRef = useRef(null);
                 <Text className='text-[#CE4257] font-bold p-4'>ราคารวม {total}.00 บาท</Text>
               </View>
         <View className='flex flex-row justify-center '>
-        <Button onPress={orderItem} title={"สั่งซื้อสินค้า"} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#720026'}} titleStyle={{fontWeight:'bold'}}/>
+        <Button  title={"สั่งซื้อสินค้า"} buttonStyle={{width:200,borderRadius:20,backgroundColor:'#720026'}} titleStyle={{fontWeight:'bold'}}/>
 
         </View>
       </View>
