@@ -100,12 +100,17 @@ export default function App() {
   const STRIPE_KEY ='pk_test_51PGKc0EsI8llu3oDeskAqIH7UsdaJ5RUliyq9fv7w292YDksrB1m2gK477DtJ5w12MtIG18KE3mRFkfSEfbfSD1K00jB7CeSFX';
   return (
     
-   
+  
     <AccelerometerProvider>
+      {/* sensor */}
       <StripeProvider publishableKey={STRIPE_KEY}>
+        {/* payment */}
         <NavigationContainer>
+          {/* navigation */}
           <UserAuthContextProvider>
+            {/* Authentication */}
             <Stack.Navigator initialRouteName='login'>
+              {/* screens */}
               <Stack.Screen name="login" component={Login} options={{ headerShown: false }} />
               <Stack.Screen name="register" component={Register} options={{ headerShown: false }} />
               <Stack.Screen name="home" component={Homepage} options={{ headerShown: false }} />
