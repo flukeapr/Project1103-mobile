@@ -19,8 +19,7 @@ import { useState,useEffect } from 'react';
 import { AccelerometerProvider } from './src/context/UseAccelerometerContext';
 import MyOrder from './src/screens/MyOrder';
 import { StripeProvider } from '@stripe/stripe-react-native';
-import { Provider } from 'react-redux';
-import store from './src/store/store';
+
 
 // font Header (Bebas Neue) + Body (Roboto)
 // Alert config กำหนดค่าต่างๆของตัว Alert
