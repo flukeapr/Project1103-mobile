@@ -3,7 +3,7 @@ import React from 'react';
 import { Icon } from '@rneui/themed';
 
 export default function RenderStar(props) {
-    
+    // components รับ props มาเพื่อส่ง icon star กลับไป
         const stars = [];
         for (let i = 1; i <= 5; i++) {
           stars.push(

@@ -1,6 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet} from 'react-native';
-import { Text, View } from 'react-native';
 import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Homepage from './src/screens/Homepage';
@@ -14,8 +12,6 @@ import EditProfile from './src/screens/EditProfile';
 import ResetPass from './src/screens/ResetPass';
 import ReviewBook from './src/screens/ReviewBook';
 import MyReview from './src/screens/MyReview';
-import TestPage from './src/screens/TestPage';
-import { useState,useEffect } from 'react';
 import { AccelerometerProvider } from './src/context/UseAccelerometerContext';
 import MyOrder from './src/screens/MyOrder';
 import { StripeProvider } from '@stripe/stripe-react-native';

@@ -10,6 +10,8 @@ import { db
  } from '../config/Firebase';
 export default function ProductReview({ id, image, book_name, Comment, Rate, Date, getReview,book_id }) {
   const {user}= useUserAuth();
+
+  // delete Review from firebase && รับ props ทั้งหมดมาจากหน้า MyReview เพื่อใช่ใน components นี้
   const handleDeleteReview = async ()=>{
     try {
       const docRef = doc(db, "Users", user.uid);
@@ -44,6 +46,7 @@ export default function ProductReview({ id, image, book_name, Comment, Rate, Dat
     }
   }
   return (
+    
     <View style={{ flexDirection: "row", padding: 10 }} key={id}  className=' bg-[#fff] rounded-lg shadow-lg shadow-gray-950 m-2 '>
     <Image
       source={{ uri: image }}

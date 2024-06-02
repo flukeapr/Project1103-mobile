@@ -114,6 +114,7 @@ export default function Register({navigation}) {
       <Input containerStyle={{width: "65%"}} placeholder="FullName"    leftIcon={{ type: 'ionicon', name: 'person-circle', color: '#CE4257'  }} value={fullName} onChange={(e) => setFullName(e.nativeEvent.text)} />
 
        </Animated.View>
+       
        <Animated.View entering={FadeInDown.delay(200).duration(1000)} className='w-full items-center'>
 <Input containerStyle={{width: "65%"}} placeholder="Email"    leftIcon={{ type: 'ionicon', name: 'mail', color: '#CE4257'  }} value={email} onChange={(e) => setEmail(e.nativeEvent.text)}/>
 
@@ -154,8 +155,8 @@ export default function Register({navigation}) {
 
      <Animated.Text  entering={FadeIn.delay(1000).duration(1000)} className="text-sm font-medium  my-2"style={{fontFamily:'Roboto'}} >Already have account ? <Text className="text-[#CE4257]" onPress={() => navigation.goBack()}>LogIn</Text> </Animated.Text>
      </View>
-      <View>
-      <Image source={LayerBottom}  style={{marginTop:125}}></Image>
+      <View >
+      <Image source={LayerBottom} ></Image>
       </View>
     </View>
    
@@ -171,6 +172,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
+    margin:5
   },
   storeName:{
     fontSize:24,

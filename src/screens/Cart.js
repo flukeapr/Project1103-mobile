@@ -54,8 +54,7 @@ const initializePaymentSheet = async () => {
     customerId: customer,
     customerEphemeralKeySecret: ephemeralKey,
     paymentIntentClientSecret: paymentIntent,
-    // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-    //methods that complete payment after a delay, like SEPA Debit and Sofort.
+  
     allowsDelayedPaymentMethods: true,
     defaultBillingDetails: {
       name: 'Jane Doe',
@@ -193,7 +192,7 @@ useEffect(() => {
       phone = querySnapshot.data().phone;
       
      }else {
-      // docSnap.data() will be undefined in this case
+      
       console.log("No such document!");
 
     }

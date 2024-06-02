@@ -3,7 +3,7 @@ import {useState} from 'react';
 import { Icon } from '@rneui/base';
 import { useAccelerometer } from '../context/UseAccelerometerContext';
 
-export default function Tobtabs({ onSearch,toggleOverlay }) {
+export default function Tobtabs({ onSearch }) {
     const [searchText, setSearchText] = useState('');
     // ส่งค่าที่ค้นหาไปยัง Homepage
     const handleSearch = (text) => {
@@ -23,7 +23,7 @@ const {isPortrait} = useAccelerometer();
        <View className="flex-3 justify-around items-center  bg-[#CE4257] " style={{flexDirection:'row',height:120,paddingTop:StatusBar.currentHeight}}>
        <Image source={require('../../assets/TopLayout.png')} ></Image>
          <TextInput placeholder="Search" className='bg-white w-72 h-12 px-2 rounded-md' value={searchText} onChangeText={handleSearch} ></TextInput>
-         <Icon name="mic" color="white" onPress={toggleOverlay}/>
+         <Icon name="mic" color="white" />
       
      </View>
 

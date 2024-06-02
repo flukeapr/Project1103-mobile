@@ -37,7 +37,7 @@ function resetPass(Email){
 
 
   return (
-   <userAuthContext.Provider value={{user,Login,sigUp,logOut,resetPass}}>{children}</userAuthContext.Provider>
+   <userAuthContext.Provider value={{user,Login,sigUp,logOut,resetPass,setUser}}>{children}</userAuthContext.Provider>
   )
 }
 export function useUserAuth(){

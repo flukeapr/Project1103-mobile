@@ -17,6 +17,7 @@ export default function Chat() {
 const [isLoading ,setIsLoading] = useState(true);
 const actionSheetRef = useRef(null);
 const [selectedMessage, setSelectedMessage] = useState([]);
+
   useEffect(() => {
       if (!user) {
           return; 
@@ -140,21 +141,7 @@ const [selectedMessage, setSelectedMessage] = useState([]);
                     left: { backgroundColor: 'white',borderColor:'black',borderWidth:1 },
                 }} />
             )}
-          //   textInputProps={
-          //     {
-               
-          //       placeholderTextColor: 'black',
-          //       style: {
-          //         backgroundColor: 'white',
-          //         borderRadius: 20,
-          //         width: '100%',
-          //         paddingLeft:3,
-          //         borderColor:'black',
-          //         marginVertical: 10,
-
-          //       }
-          //     }
-          //   }
+       
             
         />
            

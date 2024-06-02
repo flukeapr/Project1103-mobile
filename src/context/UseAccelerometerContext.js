@@ -25,7 +25,7 @@ export const AccelerometerProvider = ({ children }) => {
       const handleOrientationChange = ({x,y}) =>{
         const threshold = 0.5;
         if(Math.abs(y)>threshold){
-          setIsPortrait(true)
+          setIsPortrait(true) 
           ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
         }else if(Math.abs(x)> threshold){
             setIsPortrait(false)

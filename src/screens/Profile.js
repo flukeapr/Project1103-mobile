@@ -1,4 +1,4 @@
-import { View, Text ,TouchableOpacity,Image,StatusBar} from 'react-native'
+import { View, Text ,TouchableOpacity,Image,StatusBar,ActivityIndicator} from 'react-native'
 import {useState,useEffect} from 'react';
 import { Button, Icon } from '@rneui/base';
 import { useUserAuth } from '../context/UserAuthenContext';
@@ -17,18 +17,46 @@ const [image, setImage] = useState("");
 const [loading , setLoading] = useState(true)
 const {isPortrait} = useAccelerometer();
 
+const getImage = async ()=>{
+  const docRef = doc(db, "Users", user.uid);
+  const docSnap = await getDoc(docRef);
 
+  if(docSnap.exists()){
+    const data = docSnap.data();
+    setImage(data.image);
+  }else{
+    console.log('not found Doc:=?')
+  }
+}
+useEffect(() => {
+  const unsubscribe = navigation.addListener('focus', () => {
+    getImage().then(() => {
+      setLoading(false);
+    });
+  });
+  return unsubscribe;
+ 
+}, [navigation,user]);
 
   const handleLogout = async () => {
      await logOut();
     navigation.navigate("login");
   };
+  
+  
   return (
-    <View className="flex-1  bg-white" >      
-              <View className="flex-4 p-5 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:isPortrait ? 120 : 100,paddingTop:StatusBar.currentHeight}} >
+    
+    <View className="flex-1  bg-white" >  
+{loading ? (
+      <View className="flex-1  bg-white items-center justify-center h-full" >
+        <ActivityIndicator size="large" color="#CE4257" />
+      </View>
+    ):(
+      <>
+      <View className="flex-4 p-5 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:isPortrait ? 120 : 100,paddingTop:StatusBar.currentHeight}} >
               {user ? (
           <>
-            <Image source={{ uri: user.photoURL }} style={{ width: 50, height: 50, borderRadius: 20 }} />
+            <Image source={{ uri: image ? image : "https://cdn-icons-png.flaticon.com/512/149/149071.png" }} style={{ width: 50, height: 50, borderRadius: 20 }} />
             <Text style={{ marginLeft: 10, fontWeight: 'bold', fontSize: 16,color:'white' }}>{user.displayName}</Text>
           </>
         ) : (
@@ -53,6 +81,11 @@ const {isPortrait} = useAccelerometer();
       
         
       </View>
+      
+      </>
+      
+    )}
+              
       
     </View>
   )

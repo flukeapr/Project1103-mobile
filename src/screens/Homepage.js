@@ -48,11 +48,7 @@ const {isPortrait} = useAccelerometer();
   },[navigation]);
 
 
-  const toggleOverlay = () => {
-    setVisible(!visible);
-    
-  };
-  
+
   
   const renderItem = ({ item }) => {
     return (
@@ -66,7 +62,7 @@ const {isPortrait} = useAccelerometer();
   };
   return (
     <>
-      <Tobtabs onSearch={setSearchText} Visible={setVisible} toggleOverlay={toggleOverlay}/>
+      <Tobtabs onSearch={setSearchText} />
       <View className="flex-1 items-center justify-center bg-white" style={{width:'100%'}}>
       {loading ? (
         <ActivityIndicator size="large" color="#CE4257" />

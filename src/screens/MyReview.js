@@ -52,7 +52,7 @@ export default function MyReview({navigation}) {
     },[navigation])
   return (
 
-    <View className='bg-white'>
+    <View className='bg-white h-full'>
       <View className="flex-4 px-2 items-center  bg-[#CE4257] " style={{flexDirection:'row',height:100,paddingTop:StatusBar.currentHeight}}>
             <TouchableOpacity 
             className='flex flex-row p-2 items-center'
@@ -75,7 +75,7 @@ export default function MyReview({navigation}) {
             data={review}
             renderItem={renderItem}
             keyExtractor={(item)=> item.id}
-            
+                    
             /> 
                 ):(
                     <View className='flex items-center justify-center h-[700]'>
