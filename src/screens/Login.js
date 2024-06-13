@@ -82,7 +82,7 @@ const handleLogin = async ()=>{
       <Animated.Image entering={FadeInUp.delay(100).duration(1000).springify()} source={Logo} alt='Logo.png'></Animated.Image>
 
       {/* Title Store Name */}
-  <Animated.Text entering={FadeIn.duration(1000)} style={styles.storeName}> ReadMe Store</Animated.Text>
+  <Animated.Text entering={FadeIn.duration(1000)} style={styles.storeName}>ReadMe Store</Animated.Text>
 
  {/* Input filed */}
   <Animated.View entering={FadeInDown.delay(200).duration(1000).springify()} className='w-full flex items-center'>

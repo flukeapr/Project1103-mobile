@@ -73,7 +73,7 @@ const {isPortrait} = useAccelerometer();
           data={products.filter((prod) => {
             if (searchText === "") {
               return prod;
-            } else if (prod.name.includes(searchText)) {
+            } else if (prod.name.includes(searchText)||prod.category.includes(searchText)) {
               
               return prod;
             }
